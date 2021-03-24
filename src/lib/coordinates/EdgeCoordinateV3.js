@@ -6,7 +6,14 @@ import { hexToRGBA, isDefined, getStrokeDasharray } from "../utils";
 
 /* eslint-disable react/prop-types */
 export function renderSVG(props) {
-	const { className } = props;
+	const { className, strictValue } = props;
+	if (strictValue) {
+		props.coordinate = String(strictValue);
+		props.y1 = strictValue;
+		props.y2 = strictValue;
+	}
+	console.log(strictValue, "strictValue");
+	console.log(props, "props");
 
 	const edge = helper(props);
 	if (edge === null) return null;

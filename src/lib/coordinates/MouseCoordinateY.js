@@ -96,7 +96,7 @@ export function getYCoordinate(y, displayValue, props, moreProps) {
 
 	const { orient, at, rectWidth, rectHeight, dx } = props;
 	const { fill, opacity, fontFamily, fontSize, textFill, arrowWidth } = props;
-	const { stroke, strokeOpacity, strokeWidth } = props;
+	const { stroke, strokeOpacity, strokeWidth, strictValue } = props;
 
 	const x1 = 0, x2 = width;
 	const edgeAt = (at === "right")
@@ -133,6 +133,7 @@ export function getYCoordinate(y, displayValue, props, moreProps) {
 		x2,
 		y1: y,
 		y2: y,
+		strictValue
 	};
 	return coordinateProps;
 }
