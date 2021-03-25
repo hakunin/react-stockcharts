@@ -59,7 +59,7 @@ MouseCoordinateY.defaultProps = {
 	rectHeight: 20,
 	orient: "left",
 	at: "left",
-	dx: 0,
+	dx: 10,
 	arrowWidth: 10,
 	fill: "#525252",
 	opacity: 1,

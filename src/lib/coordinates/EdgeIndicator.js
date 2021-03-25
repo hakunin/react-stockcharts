@@ -85,7 +85,7 @@ EdgeIndicator.defaultProps = {
 	arrowWidth: 10,
 	fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
 	fontSize: 13,
-	dx: 0,
+	dx: 10,
 	hideLine: false,
 	fill: "#8a8a8a",
 	opacity: 1,
