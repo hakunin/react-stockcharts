@@ -187,8 +187,8 @@ RSISeries.defaultProps = {
 		top: "#B8C2CC",
 		middle: "#8795A1",
 		bottom: "#B8C2CC",
-		outsideThreshold: "#b300b3",
-		insideThreshold: "#ffccff",
+		outsideThreshold: "#d99c9c",
+		insideThreshold: "#e65732",
 	},
 	opacity: {
 		top: 1,

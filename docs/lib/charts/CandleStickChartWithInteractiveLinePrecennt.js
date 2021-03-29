@@ -121,8 +121,6 @@ class CandlestickChart extends React.Component {
         });
     }
     handleHover(hovering, precentLine) {
-        console.log(hovering, "handleHover");
-        console.log(precentLine.hovering, "handleHover");
     }
     onKeyPress(e) {
         const keyCode = e.which;

@@ -308,7 +308,7 @@ class EachLinePrecent extends Component {
                 >
                     {Edge1DItem && Edge2DItem
                         ? percentFormat(
-                            (((y2Value - y1Value) / y2Value)))
+                            (((y2Value - y1Value) / y1Value)))
                         : '0%'}
                 </Text>
                 <HoverTextNearMouse
