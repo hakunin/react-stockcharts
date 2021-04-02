@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import LineSeries from "./LineSeries";
-// import AreaSeries from "./AreaSeries";
 import StraightLine from "./StraightLine";
+import RSIStraightRect from "./RSIStraightRect";
 import SVGComponent from "./SVGComponent";
 import {
 	strokeDashTypes,
@@ -100,6 +100,13 @@ class RSISeries extends Component {
 				<SVGComponent>
 					{this.renderClip}
 				</SVGComponent>
+				<RSIStraightRect
+					strok={stroke.topBack}
+					opacity={opacity.bottomBack}
+					yValue={overSold}
+					strokeWidth={100 - overSold}
+					position="top"
+				/>
 				<StraightLine
 					stroke={stroke.top}
 					opacity={opacity.top}
@@ -120,6 +127,13 @@ class RSISeries extends Component {
 					yValue={overBought}
 					strokeDasharray={strokeDasharray.bottom}
 					strokeWidth={strokeWidth.bottom}
+				/>
+				<RSIStraightRect
+					stroke={stroke.bottomBack}
+					opacity={opacity.bottomBack}
+					yValue={overBought}
+					strokeWidth={overBought}
+					position="bottom"
 				/>
 				<LineSeries
 					style={style1}
@@ -156,11 +170,15 @@ RSISeries.propTypes = {
 		bottom: PropTypes.string.isRequired,
 		outsideThreshold: PropTypes.string.isRequired,
 		insideThreshold: PropTypes.string.isRequired,
+		topBack: PropTypes.string.isRequired,
+		bottomBack: PropTypes.string.isRequired,
 	}).isRequired,
 	opacity: PropTypes.shape({
 		top: PropTypes.number.isRequired,
 		middle: PropTypes.number.isRequired,
 		bottom: PropTypes.number.isRequired,
+		topBack: PropTypes.number.isRequired,
+		bottomBack: PropTypes.number.isRequired,
 	}).isRequired,
 	strokeDasharray: PropTypes.shape({
 		line: PropTypes.oneOf(strokeDashTypes),
@@ -189,11 +207,15 @@ RSISeries.defaultProps = {
 		bottom: "#B8C2CC",
 		outsideThreshold: "#d99c9c",
 		insideThreshold: "#e65732",
+		topBack: "#dcf2f7",
+		bottomBack: "#dcf2f7"
 	},
 	opacity: {
 		top: 1,
 		middle: 1,
-		bottom: 1
+		bottom: 1,
+		topBack: 1,
+		bottomBack: 1
 	},
 	strokeDasharray: {
 		line: "Solid",
