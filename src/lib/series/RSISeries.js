@@ -102,7 +102,7 @@ class RSISeries extends Component {
 				</SVGComponent>
 				<RSIStraightRect
 					strok={stroke.topBack}
-					opacity={opacity.bottomBack}
+					opacity={opacity.topBack}
 					yValue={overSold}
 					strokeWidth={100 - overSold}
 					position="top"
