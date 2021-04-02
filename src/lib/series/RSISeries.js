@@ -101,7 +101,7 @@ class RSISeries extends Component {
 					{this.renderClip}
 				</SVGComponent>
 				<RSIStraightRect
-					strok={stroke.topBack}
+					stroke={stroke.topBack}
 					opacity={opacity.topBack}
 					yValue={overSold}
 					strokeWidth={100 - overSold}

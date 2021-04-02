@@ -24,7 +24,6 @@ class RSIStraightRect extends Component {
 		ctx.lineWidth = strokeWidth;
 
 		const { x1, y1, x2, y2 } = getLineCoordinates(yScale, yValue, width);
-		console.log(x1, y1, x2, y2 );
 
 		if (position === "top") {
 			ctx.moveTo(x1, y1 - strokeWidth / 2);
