@@ -183,10 +183,10 @@ LabelArrow.defaultProps = {
 	appearance: {
 		width: 40,
 		open: {
-			fill: "green",
+			fill: "#4B8302",
 		},
 		close: {
-			fill: "red",
+			fill: "#E64C00",
 		},
 	},
 	hoverText: {

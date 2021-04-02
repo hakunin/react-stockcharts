@@ -238,7 +238,7 @@ EachLabelArrow.defaultProps = {
 	width: 40,
 	type: "OPEN",
 	width: 40,
-	fill: "green",
+	fill: "#4B8302",
 	hoverText: {
 		...HoverTextNearMouse.defaultProps,
 	}

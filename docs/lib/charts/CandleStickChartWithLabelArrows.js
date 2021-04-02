@@ -72,10 +72,10 @@ class CandlestickChart extends React.Component {
                     appearance: {
                         width: 40,
                         open: {
-                            fill: "green",
+                            fill: "#4B8302",
                         },
                         close: {
-                            fill: "red",
+                            fill: "#E64C00",
                         },
                     },
                     type: "CLOSE"
@@ -85,10 +85,10 @@ class CandlestickChart extends React.Component {
                     appearance: {
                         width: 40,
                         open: {
-                            fill: "green",
+                            fill: "#4B8302",
                         },
                         close: {
-                            fill: "red",
+                            fill: "#E64C00",
                         },
                     },
                     type: "OPEN"
@@ -147,10 +147,10 @@ class CandlestickChart extends React.Component {
                     appearance: {
                         width: 40,
                         open: {
-                            fill: "green",
+                            fill: "#4B8302",
                         },
                         close: {
-                            fill: "red",
+                            fill: "#E64C00",
                         },
                     },
                     type: 'OPEN',

@@ -69,7 +69,7 @@ class MovingAverageCrossOverAlgorithmV2 extends React.Component {
 		const longAnnotationProps = {
 			...defaultAnnotationProps,
 			y: ({ yScale, datum }) => yScale(datum.low),
-			fill: "green",
+			fill: "#4B8302",
 			path: buyPath,
 			tooltip: "Go long",
 		};
@@ -77,7 +77,7 @@ class MovingAverageCrossOverAlgorithmV2 extends React.Component {
 		const shortAnnotationProps = {
 			...defaultAnnotationProps,
 			y: ({ yScale, datum }) => yScale(datum.high),
-			fill: "red",
+			fill: "#E64C00",
 			path: sellPath,
 			tooltip: "Go short",
 		};
