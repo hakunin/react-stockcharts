@@ -431,8 +431,12 @@ function drawEachTick(ctx, tick, result) {
 function drawEachTickLabel(ctx, tick, result) {
 	const { canvas_dy, format } = result;
 
-	ctx.beginPath();
-	ctx.fillText(format(tick.value), tick.labelX, tick.labelY + canvas_dy);
+	if (!format(tick.value)) {
+		console.log("Tick value is undefined")
+	} else {
+		ctx.beginPath();
+		ctx.fillText(format(tick.value), tick.labelX, tick.labelY + canvas_dy);	
+	}
 }
 
 export default Axis;
