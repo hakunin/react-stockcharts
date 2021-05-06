@@ -20,6 +20,7 @@
 - lover
 - circle
 - close
+- goal
 - pluse
 - home
 - flag

@@ -15,6 +15,7 @@ import {
     LoverPath,
     CirclePath,
     ClosePath,
+    GoalPath,
     PlusePath,
     HomePath,
     FlagPath,
@@ -107,6 +108,9 @@ class AnnotateShape extends Component {
             case "close":
                 pathData = ClosePath(x, y, width, height, degrees);
                 break;
+            case "goal":
+                pathData = GoalPath(x, y, width, height, degrees);
+                break;    
             case "pluse":
                 pathData = PlusePath(x, y, width, height, degrees);
                 break;
@@ -186,6 +190,9 @@ class AnnotateShape extends Component {
                 break;
             case "close":
                 pathData = ClosePath(x, y, width, height, degrees);
+                break;
+            case "goal":
+                pathData = GoalPath(x, y, width, height, degrees);
                 break;
             case "pluse":
                 pathData = PlusePath(x, y, width, height, degrees);

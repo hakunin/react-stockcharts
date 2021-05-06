@@ -174,7 +174,19 @@ class CandleStickChartWithADXIndicator extends React.Component {
 
 					<ADXTooltip origin={[-38, 15]}
 						yAccessor={d => d.adx}
-						apperance={adxAppearance}
+						apperance={{
+							fill: "none",
+							hoverStrokeWidth: 4,
+							stroke: {
+								ALine: "#ff0001",
+								dLine: "#EA2BFF",
+								kLine: "#74D400",	
+							},
+							strokeDasharray: "Solid",
+							strokeOpacity: 1,
+							strokeWidth: 1,
+							windowSize: 14,
+						}}
 						options={rsiCalculator.options()} />
 				</Chart>
 				<Chart id={8}

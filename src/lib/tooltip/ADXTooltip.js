@@ -18,7 +18,19 @@ class ADXTooltip extends Component {
 	renderSVG(moreProps) {
 		const { onClick, fontFamily, fontSize, yAccessor, displayFormat, className } = this.props;
 		const { options, labelFill, textFill, appearance } = this.props;
-		const { stroke } = appearance;
+		const { stroke } = {
+			fill: "none",
+			hoverStrokeWidth: 4,
+			stroke: {
+				ALine: "#ff0001",
+				dLine: "#EA2BFF",
+				kLine: "#74D400",	
+			},
+			strokeDasharray: "Solid",
+			strokeOpacity: 1,
+			strokeWidth: 1,
+			windowSize: 14,
+		};
 		const { displayValuesFor } = this.props;
 		const { chartConfig: { width, height } } = moreProps;
 
@@ -38,8 +50,7 @@ class ADXTooltip extends Component {
 
 		return (
 			<g className={className} transform={`translate(${x}, ${y})`} onClick={onClick}>
-				<ToolTipText x={0} y={0}
-					fontFamily={fontFamily} fontSize={fontSize}>
+				<ToolTipText x={0} y={0} fontFamily={fontFamily} fontSize={fontSize}>
 					<ToolTipTSpanLabel fill={labelFill}>{tooltipLabel}</ToolTipTSpanLabel>
 					<tspan fill={stroke.ALine}>{`${adxVal} `}</tspan>
 					<ToolTipTSpanLabel fill={labelFill}>{plusDILabel}</ToolTipTSpanLabel>
