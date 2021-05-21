@@ -49,7 +49,13 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 		}
 
 		if (typeof clamp === "function") {
-			clampedDomain = clamp(clampedDomain, [xAccessor(head(data)), xAccessor(last(data))]);
+			clampedDomain = clamp(
+				clampedDomain, 
+				xAccessor(head(data)), 
+				xAccessor(last(data)),
+				left,
+				right
+			);
 		} else {
 			if (clamp === "left" || clamp === "both" || clamp === true) {
 				clampedDomain = [
