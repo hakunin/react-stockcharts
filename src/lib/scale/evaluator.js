@@ -75,7 +75,6 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 		if (clampedDomain !== inputDomain) {
 			filteredData = getFilteredResponse(data, clampedDomain[0], clampedDomain[1], xAccessor);
 		}
-
 		const realInputDomain = clampedDomain;
 		// [xAccessor(head(filteredData)), xAccessor(last(filteredData))];
 
@@ -97,7 +96,7 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 			+ ` I can show up to ${showMaxThreshold(width, pointsPerPxThreshold) - 1} points in that width. `
 			+ `Also FYI the entire chart width is ${chartWidth}px and pointsPerPxThreshold is ${pointsPerPxThreshold}`);
 
-		if (canShowTheseManyPeriods(width, filteredData.length, pointsPerPxThreshold, minPointsPerPxThreshold)) {
+		if (canShowTheseManyPeriods(width, filteredData.length, pointsPerPxThreshold, minPointsPerPxThreshold, right - left)) {
 			plotData = filteredData;
 			domain = realInputDomain;
 			log("AND IT WORKED");
@@ -133,12 +132,12 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 	return { filterData };
 }
 
-function canShowTheseManyPeriods(width, arrayLength, maxThreshold, minThreshold) {
-	return arrayLength > showMinThreshold(width, minThreshold) && arrayLength < showMaxThreshold(width, maxThreshold);
+function canShowTheseManyPeriods(width, arrayLength, maxThreshold, minThreshold, data) {
+	return arrayLength > showMinThreshold(width, minThreshold, data) && arrayLength < showMaxThreshold(width, maxThreshold);
 }
 
-function showMinThreshold(width, threshold) {
-	return Math.max(1, Math.ceil(width * threshold));
+function showMinThreshold(width, threshold, data) {
+	return Math.max(data * 0.8, Math.ceil(width * threshold));
 }
 
 function showMaxThreshold(width, threshold) {
