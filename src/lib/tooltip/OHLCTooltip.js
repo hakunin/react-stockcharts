@@ -152,6 +152,7 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
     fontSize,
     visible,
     serverTime = "08:00",
+    isIntraday,
     dir,
     onUpdateServerTime = () => { console.log("onUpdateServerTime") }
   } = props;
@@ -170,6 +171,12 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
   };
 
   const displayTexts = dir === "rtl" ? displayTextsRTL : props.displayTexts;
+  let ltrDateXPosition = "0px";
+  let rtlDateXPosition = "1060px";
+  if (isIntraday) {
+    ltrDateXPosition = "-30px"
+    rtlDateXPosition = "1100"
+  }
 
   const {
     displayDate,
@@ -242,7 +249,7 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
           <tspan key="value_O_divider" fill="#567E9C" dx="15px">|</tspan>
 
           <tspan key="value" fill="white" dx="30px">{displayDate}</tspan>
-          <ToolTipTSpanLabel fill="white" key="label" x="1060px">
+          <ToolTipTSpanLabel fill="white" key="label" x={rtlDateXPosition}>
             {displayTexts.d}
           </ToolTipTSpanLabel>
           <tspan key="value_divider" fill="#567E9C" dx="15px">|</tspan> 
@@ -259,60 +266,60 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
         onClick={onClick}
         fill="white"
       >        
-        <image onClick={onUpdateServerTime} x="853px" y="-10px" href="./assets/cycle_arrow.png" height="24" width="24"/>
+        <image onClick={onUpdateServerTime} x="890px" y="-10px" href="./assets/cycle_arrow.png" height="24" width="24"/>
         <ToolTipText
           x={0}
           y={0}
           fontFamily={fontFamily}
           fontSize={fontSize || 14}
         >
-          <ToolTipTSpanLabel fill="white" key="label" dy="6px">
+          <ToolTipTSpanLabel fill="white" key="label" dy="6px" x={ltrDateXPosition}>
             {displayTexts.d}
           </ToolTipTSpanLabel>
           <tspan key="value" fill="white">{displayDate}</tspan>
-          <tspan key="value_divider" fill="#567E9C" x="123">|</tspan>
+          <tspan key="value_divider" fill="#567E9C" x="130">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_O" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_O" dx="30px">
             {displayTexts.o}
           </ToolTipTSpanLabel>
           <tspan key="value_O" fill="white">{open}</tspan>
-          <tspan key="value_O_divider" fill="#567E9C" x="236">|</tspan>
+          <tspan key="value_O_divider" fill="#567E9C" x="250">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_H" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_H" dx="30px">
             {displayTexts.h}
           </ToolTipTSpanLabel>
           <tspan key="value_H" fill="white">{high}</tspan>
-          <tspan key="value_H_divider" fill="#567E9C" x="352px">|</tspan>
+          <tspan key="value_H_divider" fill="#567E9C" x="368px">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_L" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_L" dx="30px">
             {displayTexts.l}
           </ToolTipTSpanLabel>
           <tspan key="value_L" fill="white">{low}</tspan>
-          <tspan key="value_L_divider" fill="#567E9C" x="464px">|</tspan>
+          <tspan key="value_L_divider" fill="#567E9C" x="485px">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_C" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_C" dx="30px">
             {displayTexts.c}
           </ToolTipTSpanLabel>
           <tspan key="value_C" fill="white">{close}</tspan>
-          <tspan key="value_C_divider" fill="#567E9C" x="579px">|</tspan>
+          <tspan key="value_C_divider" fill="#567E9C" x="603px">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_Vol" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_Vol" dx="30px">
             {displayTexts.v}
           </ToolTipTSpanLabel>
           <tspan key="value_Vol" fill="white">{volume}</tspan>
-          <tspan key="value_Vol_divider" fill="#567E9C" x="704px">|</tspan>
+          <tspan key="value_Vol_divider" fill="#567E9C" x="735px">|</tspan>
 
-          <ToolTipTSpanLabel fill="white" key="label_P" dx="34px">
+          <ToolTipTSpanLabel fill="white" key="label_P" dx="30px">
             {displayTexts.p}
           </ToolTipTSpanLabel>
           <tspan key="value_P" fill="white">{percentChange}</tspan>
-          <tspan key="value_P_divider" fill="#567E9C" x="818px">|</tspan>
+          <tspan key="value_P_divider" fill="#567E9C" x="855px">|</tspan>
 
           <ToolTipTSpanLabel fill="white" key="label_U" dx="60px">
             {serverTime ? displayTexts.u : ""}
           </ToolTipTSpanLabel>
           <tspan key="value_U" fill="white">{serverTime || ""}</tspan>
-          <tspan key="value_U_divider" fill="#567E9C" dx="12px">{serverTime ? "|" : ""}</tspan>
+          <tspan key="value_U_divider" fill="#567E9C" dx="20px">{serverTime ? "|" : ""}</tspan>
         </ToolTipText>       
       </g>
     )

@@ -152,25 +152,12 @@ class CandleStickChartWithDarkTheme extends React.Component {
 					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
 						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#DB0000"}/>
 
-					<OHLCTooltip origin={[-40, -10]}/>
-					{/* <MovingAverageTooltip
-						onClick={e => console.log(e)}
-						origin={[-38, 15]}
-						options={[
-							{
-								yAccessor: ema20.accessor(),
-								type: ema20.type(),
-								stroke: ema20.stroke(),
-								windowSize: ema20.options().windowSize,
-							},
-							{
-								yAccessor: ema50.accessor(),
-								type: ema50.type(),
-								stroke: ema50.stroke(),
-								windowSize: ema50.options().windowSize,
-							},
-						]}
-					/> */}
+					<OHLCTooltip 
+						origin={[-40, -10]}
+						isIntraday={true}
+						xDisplayFormat={timeFormat("%Y-%m-%d %H:%M")}
+						// xDisplayFormat={timeFormat("%Y-%m-%d")}
+					/>
 					<GroupTooltip
 						layout="vertical"
 						origin={[-38, 15]}
