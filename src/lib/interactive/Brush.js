@@ -84,6 +84,7 @@ class Brush extends Component {
 		}
 	}
 	handleZoomStart(moreProps) {
+		if (this.state.rect) return;
 		this.zoomHappening = false;
 		const {
 			mouseXY: [, mouseY],
