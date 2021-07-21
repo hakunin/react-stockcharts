@@ -341,19 +341,19 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
 		);
 	};
 
-	const renderTooltip = () => dir === "rtl" ? getRTL() : getLTR();
-	return (
-		<g>
-			<rect
-				id="myGroup"
-				width="100%"
-				height="20px"
-				fill="black"
-				transform={`translate(${x}, ${y})`}
-			></rect>
-			{renderTooltip()}
-		</g>
-	);
+	// const renderTooltip = () => dir === "rtl" ? getRTL() : getLTR();
+	// return (
+	// 	<g>
+	// 		<rect
+	// 			id="myGroup"
+	// 			width="100%"
+	// 			height="20px"
+	// 			fill="black"
+	// 			transform={`translate(${x}, ${y})`}
+	// 		></rect>
+	// 		{renderTooltip()}
+	// 	</g>
+	// );
 }
 
 export default OHLCTooltip;
