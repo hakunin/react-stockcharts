@@ -14,6 +14,11 @@ class OHLCTooltip extends Component {
 		super(props);
 		this.renderSVG = this.renderSVG.bind(this);
 	}
+
+	componentDidUpdate(props) {
+		console.log(props);
+	}
+
 	renderSVG(moreProps) {
 		const { displayValuesFor } = this.props;
 		const {
@@ -75,6 +80,9 @@ class OHLCTooltip extends Component {
 			y,
 		};
 
+		if (this.props.getOHLCData) {
+			this.props.getOHLCData({ ...itemsToDisplay,  serverTime: this.props.serverTime });
+		}
 		return this.props.children(this.props, moreProps, itemsToDisplay);
 	}
 	render() {
@@ -203,10 +211,6 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
 		open: open,
 		displayDate: displayDate
 	};
-
-	if (getOHLCData) {
-		getOHLCData(OHLCData);
-	}
 
 	const getRTL = () => {
 		return (

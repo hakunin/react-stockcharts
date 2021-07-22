@@ -158,7 +158,7 @@ class CandleStickChartWithDarkTheme extends React.Component {
 						xDisplayFormat={timeFormat("%Y-%m-%d %H:%M")}
 						isVisible={true}
 						// xDisplayFormat={timeFormat("%Y-%m-%d")}
-						// getOHLCData={(data) => console.log(data)}
+						getOHLCData={(data) => {console.log(data)}}
 					/>
 					<GroupTooltip
 						layout="vertical"
