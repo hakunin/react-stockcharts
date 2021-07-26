@@ -30,7 +30,7 @@ class Rectangle extends Component {
 		this.getSelectionState = isHoverForInteractiveType("rectangle")
 			.bind(this);
 
-		// this.getHoverInteractive = this.getHoverInteractive.bind(this);
+		this.getHoverInteractive = this.getHoverInteractive.bind(this);
 
 		this.state = {
 		};
@@ -125,6 +125,13 @@ class Rectangle extends Component {
 
 		console.log(this.state);
 	}
+
+	getHoverInteractive(hovering, rectangle) {
+		rectangle.hovering = hovering;
+		const { isHover } = this.props;
+		isHover(hovering, rectangle);
+	}
+
 	render() {
 		const { appearance } = this.props;
 		const { enabled, snap, shouldDisableSnap, snapTo, type } = this.props;
@@ -176,7 +183,7 @@ class Rectangle extends Component {
 					onDrag={this.handleDragLine}
 					onDragComplete={this.handleDragLineComplete}
 					edgeInteractiveCursor="react-stockcharts-move-cursor"
-				// getHoverInteractive={hovering => this.getHoverInteractive(hovering, each)}
+					getHoverInteractive={hovering => this.getHoverInteractive(hovering, each)}
 				/>;
 			})}
 			{tempLine}

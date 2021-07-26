@@ -196,7 +196,7 @@ class EachRectangle extends Component {
 				onDragStart={this.handleDragStart}
 				onDrag={this.handleChannelDrag}
 				onDragComplete={onDragComplete}
-				// getHoverInteractive={this.props.getHoverInteractive}
+				getHoverInteractive={this.props.getHoverInteractive}
 			/>
 			<HoverTextNearMouse
 				show={hoverTextEnabled && hover && !selected}
