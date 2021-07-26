@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -21,7 +22,7 @@ class RectangleSimple extends Component {
 		this.isHover = this.isHover.bind(this);
 	}
 	isHover(moreProps) {
-		const { tolerance, onHover } = this.props;
+		const { tolerance, onHover, getHoverInteractive } = this.props;
 
 		if (isDefined(onHover)) {
 			const { x1Value, x2Value, y1Value, y2Value, type } = this.props;

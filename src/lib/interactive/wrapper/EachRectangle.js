@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -105,35 +106,33 @@ class EachRectangle extends Component {
 	}
 	handleEdge1Drag(moreProps) {
 		const { index, onDrag } = this.props;
-		const {
-			x2Value, y2Value,
-		} = this.props;
+		const { end } = this.props;
 
 		const [x1Value, y1Value] = getNewXY(moreProps);
 
 		onDrag(index, {
 			x1Value,
 			y1Value,
-			x2Value,
-			y2Value,
+			x2Value: end[0],
+			y2Value: end[1],
 		});
 	}
 	handleEdge2Drag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			x1Value, y1Value,
+			start
 		} = this.props;
 
 		const [x2Value, y2Value] = getNewXY(moreProps);
 
 		onDrag(index, {
-			x1Value,
-			y1Value,
+			x1Value: start[0],
+			y1Value: start[1],
 			x2Value,
 			y2Value,
 		});
 	}
-	getEdgeCircle({ xy, dragHandler, cursor, fill, edge }) {
+	getEdgeCircle({ x, y, dragHandler, cursor, fill, edge }) {
 		const { hover } = this.state;
 		const {
 			edgeStroke,
@@ -147,8 +146,8 @@ class EachRectangle extends Component {
 			ref={this.saveNodeType(edge)}
 
 			show={selected || hover}
-			cx={xy[0]}
-			cy={xy[1]}
+			cx={x}
+			cy={y}
 			r={r}
 			fill={fill}
 			stroke={edgeStroke}
@@ -180,6 +179,7 @@ class EachRectangle extends Component {
 			interactive,
 		} = this.props;
 
+		console.log(start, end, "OOK");
 		const {
 			enable: hoverTextEnabled,
 			...restHoverTextProps
@@ -194,17 +194,19 @@ class EachRectangle extends Component {
 		const line1Edge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
-					xy: start,
+					x: start[0],
+					y: start[1],
 					dragHandler: this.handleEdge1Drag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: edgeFill,
+					fill: "red",
 					edge: "line1edge1",
 				})}
 				{this.getEdgeCircle({
-					xy: end,
+					x: end[0],
+					y: end[1],
 					dragHandler: this.handleEdge2Drag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: edgeFill,
+					fill: "green",
 					edge: "line1edge2",
 				})}
 			</g>
@@ -212,17 +214,19 @@ class EachRectangle extends Component {
 		const line2Edge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
-					xy: [end[0], start[1]],
-					dragHandler: this.handleEdge1Drag,
-					cursor: "react-stockcharts-ns-resize-cursor",
-					fill: edgeFill,
+					x: end[0],
+					y: start[1],
+					// dragHandler: this.handleEdge1Drag,
+					// cursor: "react-stockcharts-move-cursor",
+					fill: "blue",
 					edge: "line2edge1",
 				})}
 				{this.getEdgeCircle({
-					xy: [start[0], end[1]],
-					dragHandler: this.handleEdge2Drag,
-					cursor: "react-stockcharts-ns-resize-cursor",
-					fill: edgeFill,
+					x: start[0],
+					y: end[1],
+					// dragHandler: this.handleEdge2Drag,
+					// cursor: "react-stockcharts-move-cursor",
+					fill: "yellow",
 					edge: "line2edge2",
 				})}
 			</g>
@@ -290,13 +294,6 @@ EachRectangle.propTypes = {
 	y2Value: PropTypes.any,
 
 	index: PropTypes.number,
-
-	type: PropTypes.oneOf([
-		"XLINE", // extends from -Infinity to +Infinity
-		"RAY", // extends to +/-Infinity in one direction
-		"LINE", // extends between the set bounds
-		"RECTANGLE"
-	]).isRequired,
 
 	onDrag: PropTypes.func.isRequired,
 	onEdge1Drag: PropTypes.func.isRequired,

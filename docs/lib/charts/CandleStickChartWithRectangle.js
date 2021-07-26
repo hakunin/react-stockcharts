@@ -193,6 +193,7 @@ class CandleStickChartWithRectangle extends React.Component {
 						isHover={this.handleHover}
 						snap={false}
 						snapTo={d => [d.high, d.low]}
+						type="RECTANGLE"
 					/>
 				</Chart>
 

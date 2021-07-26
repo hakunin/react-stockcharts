@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -40,9 +41,12 @@ class Rectangle extends Component {
 		this.setState({
 			override: {
 				index,
-				...newXYValue
+				...newXYValue,
+				start: [newXYValue.x1Value, newXYValue.y1Value],
+				end: [newXYValue.x2Value, newXYValue.y2Value],
 			}
 		});
+
 	}
 	handleDragLineComplete(moreProps) {
 		const { override } = this.state;
@@ -116,7 +120,7 @@ class Rectangle extends Component {
 			];
 			this.setState({
 				current: null,
-				// rectangle: newTrends
+				rectangle: newTrends
 			}, () => {
 				this.props.onComplete(newTrends, moreProps, e);
 			});
@@ -143,7 +147,8 @@ class Rectangle extends Component {
 		const tempLine = isDefined(current) && isDefined(current.end)
 			? <EachRectangle
 				interactive={false}
-				enabled={enabled}
+				{...current}
+
 				shouldDisableSnap={shouldDisableSnap}
 				snap={snap}
 				snapTo={snapTo}
@@ -153,9 +158,6 @@ class Rectangle extends Component {
 				currentPositionstrokeOpacity={currentPositionstrokeOpacity}
 				currentPositionStrokeWidth={currentPositionStrokeWidth}
 				hoverText={hoverText}
-				rectangle={rectangle}
-				override={override}
-				{...current}
 			/>
 			: null;
 
@@ -179,6 +181,7 @@ class Rectangle extends Component {
 					appearance={eachAppearance}
 					snap={snap}
 					snapTo={snapTo}
+					type={type}
 					onDrag={this.handleDragLine}
 					onDragComplete={this.handleDragLineComplete}
 					edgeInteractiveCursor="react-stockcharts-move-cursor"
