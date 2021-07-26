@@ -260,6 +260,7 @@ class EachRectangle extends Component {
 				})}
 			</g>
 			: null;
+		console.log(hover, selected);
 		return <g>
 			<RectangleSimple
 				ref={this.saveNodeType("rectangle")}

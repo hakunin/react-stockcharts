@@ -80,8 +80,8 @@ class CandleStickChartWithRectangle extends React.Component {
 		console.log(this.state.rectangle)
 	}
 	handleHover(hovering, equidistant) {
-        console.log(hovering, "handleHover");
-        console.log(equidistant.hovering, "handleHover");
+        // console.log(hovering, "handleHover");
+        // console.log(equidistant.hovering, "handleHover");
     }
 	onKeyPress(e) {
 		const keyCode = e.which;

@@ -92,6 +92,8 @@ class RectangleSimple extends Component {
 		const width = x2 - x1;
 		const height = y2 - y1;
 
+		ctx.lineWidth = strokeWidth;
+
 		ctx.beginPath();
 		ctx.rect(x1, y1, width, height);
 		ctx.stroke();
