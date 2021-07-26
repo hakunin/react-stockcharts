@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 

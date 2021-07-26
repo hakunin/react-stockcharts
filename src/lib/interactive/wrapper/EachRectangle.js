@@ -17,14 +17,16 @@ class EachRectangle extends Component {
 
 		this.handleEdge1Drag = this.handleEdge1Drag.bind(this);
 		this.handleEdge2Drag = this.handleEdge2Drag.bind(this);
-		this.handleLineDragStart = this.handleLineDragStart.bind(this);
+
+		this.handleDragStart = this.handleDragStart.bind(this);
 		this.handleLineDrag = this.handleLineDrag.bind(this);
 
-		this.handleEdge1DragStart = this.handleEdge1DragStart.bind(this);
-		this.handleEdge2DragStart = this.handleEdge2DragStart.bind(this);
+		// this.handleEdge1DragStart = this.handleEdge1DragStart.bind(this);
+		// this.handleEdge2DragStart = this.handleEdge2DragStart.bind(this);
 
 		this.handleDragComplete = this.handleDragComplete.bind(this);
 
+		this.getEdgeCircle = this.getEdgeCircle.bind(this);
 		this.handleHover = this.handleHover.bind(this);
 
 		this.isHover = isHover.bind(this);
@@ -36,7 +38,14 @@ class EachRectangle extends Component {
 		};
 	}
 
-	handleLineDragStart() {
+	handleHover(moreProps) {
+		if (this.state.hover !== moreProps.hovering) {
+			this.setState({
+				hover: moreProps.hovering
+			});
+		}
+	}
+	handleDragStart() {
 		const {
 			x1Value, y1Value,
 			x2Value, y2Value,
@@ -78,16 +87,16 @@ class EachRectangle extends Component {
 			y2Value: newY2Value,
 		});
 	}
-	handleEdge1DragStart() {
-		this.setState({
-			anchor: "edge2"
-		});
-	}
-	handleEdge2DragStart() {
-		this.setState({
-			anchor: "edge1"
-		});
-	}
+	// handleEdge1DragStart() {
+	// 	this.setState({
+	// 		anchor: "edge2"
+	// 	});
+	// }
+	// handleEdge2DragStart() {
+	// 	this.setState({
+	// 		anchor: "edge1"
+	// 	});
+	// }
 	handleDragComplete(...rest) {
 		this.setState({
 			anchor: undefined
@@ -124,12 +133,31 @@ class EachRectangle extends Component {
 			y2Value,
 		});
 	}
-	handleHover(moreProps) {
-		if (this.state.hover !== moreProps.hovering) {
-			this.setState({
-				hover: moreProps.hovering
-			});
-		}
+	getEdgeCircle({ xy, dragHandler, cursor, fill, edge }) {
+		const { hover } = this.state;
+		const {
+			edgeStroke,
+			edgeStrokeWidth,
+			r,
+			selected,
+			onDragComplete
+		} = this.props;
+
+		return <ClickableCircle
+			ref={this.saveNodeType(edge)}
+
+			show={selected || hover}
+			cx={xy[0]}
+			cy={xy[1]}
+			r={r}
+			fill={fill}
+			stroke={edgeStroke}
+			strokeWidth={edgeStrokeWidth}
+			interactiveCursorClass={cursor}
+
+			onDragStart={this.handleDragStart}
+			onDrag={dragHandler}
+			onDragComplete={onDragComplete} />;
 	}
 	render() {
 		const {
@@ -163,7 +191,42 @@ class EachRectangle extends Component {
 			? { onHover: this.handleHover, onUnHover: this.handleHover }
 			: {};
 
-
+		const line1Edge = isDefined(start) && isDefined(end)
+			? <g>
+				{this.getEdgeCircle({
+					xy: start,
+					dragHandler: this.handleEdge1Drag,
+					cursor: "react-stockcharts-move-cursor",
+					fill: edgeFill,
+					edge: "line1edge1",
+				})}
+				{this.getEdgeCircle({
+					xy: end,
+					dragHandler: this.handleEdge2Drag,
+					cursor: "react-stockcharts-move-cursor",
+					fill: edgeFill,
+					edge: "line1edge2",
+				})}
+			</g>
+			: null;
+		const line2Edge = isDefined(start) && isDefined(end)
+			? <g>
+				{this.getEdgeCircle({
+					xy: [end[0], start[1]],
+					dragHandler: this.handleEdge1Drag,
+					cursor: "react-stockcharts-ns-resize-cursor",
+					fill: edgeFill,
+					edge: "line2edge1",
+				})}
+				{this.getEdgeCircle({
+					xy: [start[0], end[1]],
+					dragHandler: this.handleEdge2Drag,
+					cursor: "react-stockcharts-ns-resize-cursor",
+					fill: edgeFill,
+					edge: "line2edge2",
+				})}
+			</g>
+			: null;
 		return <g>
 			<RectangleSimple
 				ref={this.saveNodeType("rectangle")}
@@ -194,10 +257,12 @@ class EachRectangle extends Component {
 				interactiveCursorClass="react-stockcharts-move-cursor"
 
 				onDragStart={this.handleDragStart}
-				onDrag={this.handleChannelDrag}
+				onDrag={this.handleLineDrag}
 				onDragComplete={onDragComplete}
 				getHoverInteractive={this.props.getHoverInteractive}
 			/>
+			{line1Edge}
+			{line2Edge}
 			<HoverTextNearMouse
 				show={hoverTextEnabled && hover && !selected}
 				{...restHoverTextProps} />
@@ -219,10 +284,10 @@ export function getNewXY(moreProps) {
 }
 
 EachRectangle.propTypes = {
-	// x1Value: PropTypes.any,
-	// x2Value: PropTypes.any,
-	// y1Value: PropTypes.any,
-	// y2Value: PropTypes.any,
+	x1Value: PropTypes.any,
+	x2Value: PropTypes.any,
+	y1Value: PropTypes.any,
+	y2Value: PropTypes.any,
 
 	index: PropTypes.number,
 

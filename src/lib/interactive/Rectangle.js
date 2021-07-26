@@ -59,7 +59,7 @@ class Rectangle extends Component {
 					}
 					: {
 						...each,
-						selected: false,
+						// selected: false,
 					});
 
 			this.setState({
@@ -112,12 +112,11 @@ class Rectangle extends Component {
 					end: xyValue,
 					appearance,
 					type,
-
 				}
 			];
 			this.setState({
 				current: null,
-				rectangle: newTrends
+				// rectangle: newTrends
 			}, () => {
 				this.props.onComplete(newTrends, moreProps, e);
 			});
