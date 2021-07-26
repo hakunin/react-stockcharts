@@ -77,10 +77,11 @@ class CandleStickChartWithRectangle extends React.Component {
 			enableInteractiveObject: false,
 			rectangle
 		});
+		console.log(this.state.rectangle)
 	}
 	handleHover(hovering, equidistant) {
-        // console.log(hovering, "handleHover");
-        // console.log(equidistant.hovering, "handleHover");
+        console.log(hovering, "handleHover");
+        console.log(equidistant.hovering, "handleHover");
     }
 	onKeyPress(e) {
 		const keyCode = e.which;
@@ -190,6 +191,8 @@ class CandleStickChartWithRectangle extends React.Component {
 						onComplete={this.onDrawComplete}
 						rectangle={rectangle}
 						isHover={this.handleHover}
+						snap={false}
+						snapTo={d => [d.high, d.low]}
 					/>
 				</Chart>
 

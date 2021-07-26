@@ -1,5 +1,3 @@
-
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -136,6 +134,8 @@ class EquidistantChannel extends Component {
 				});
 			}
 		}
+		console.log(this.state.current);
+
 	}
 	getHoverInteractive(hovering, equidistant) {
 		equidistant.hovering = hovering;

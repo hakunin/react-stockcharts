@@ -89,7 +89,7 @@ class ChannelWithArea extends Component {
 
 				ctx.closePath();
 				ctx.fill();
-				
+
 				ctx.beginPath();
 				ctx.moveTo(x1, line2Y1);
 				ctx.lineTo(x2, line2Y2);

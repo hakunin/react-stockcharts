@@ -12,6 +12,6 @@ export { default as DrawingObjectSelector } from "./DrawingObjectSelector";
 export { default as FreeArrows } from "./FreeArrows";
 export { default as LabelArrow } from "./LabelArrow";
 export { default as LinePrecent } from "./LinePrecent";
-export {default as Shape } from "./Shape";
-export { default as HorizontalLine } from "./HorizontalLine"
+export { default as Shape } from "./Shape";
+export { default as HorizontalLine } from "./HorizontalLine";
 
