@@ -29,9 +29,11 @@ class RectangleSimple extends Component {
 			const { mouseXY, xScale } = moreProps;
 			const { chartConfig: { yScale } } = moreProps;
 
-			const hovering = isHovering({
-				x1Value, y1Value,
-				x2Value, y2Value,
+			const hoveringTop = isHovering({
+				x1Value,
+				y1Value,
+				x2Value,
+				y2Value: y1Value,
 				mouseXY,
 				type,
 				tolerance,
@@ -39,9 +41,46 @@ class RectangleSimple extends Component {
 				yScale,
 			});
 
-			console.log("hovering ->", hovering);
+			const hoveringRight = isHovering({
+				x1Value: x2Value,
+				y1Value,
+				x2Value,
+				y2Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
 
-			return hovering;
+			const hoveringBottom = isHovering({
+				x1Value,
+				y1Value: y2Value,
+				x2Value,
+				y2Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
+
+			const hoveringLeft = isHovering({
+				x1Value,
+				y1Value,
+				x2Value: x1Value,
+				y2Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
+
+			if (getHoverInteractive) {
+				getHoverInteractive(hoveringTop || hoveringRight || hoveringBottom || hoveringLeft);
+			}
+			return hoveringTop || hoveringRight || hoveringBottom || hoveringLeft;
 		}
 		return false;
 	}

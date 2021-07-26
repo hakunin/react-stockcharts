@@ -209,7 +209,6 @@ class EachRectangle extends Component {
 			interactive,
 		} = this.props;
 
-		console.log(start, end, "OOK");
 		const {
 			enable: hoverTextEnabled,
 			...restHoverTextProps
