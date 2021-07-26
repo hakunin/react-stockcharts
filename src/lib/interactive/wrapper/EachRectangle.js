@@ -16,8 +16,11 @@ class EachRectangle extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleEdge1Drag = this.handleEdge1Drag.bind(this);
-		this.handleEdge2Drag = this.handleEdge2Drag.bind(this);
+		this.handleTopLeftEdgeDrag = this.handleTopLeftEdgeDrag.bind(this);
+		this.handleBottomRightEdgeDrag = this.handleBottomRightEdgeDrag.bind(this);
+
+		this.handleTopRightEdgeDrag = this.handleTopRightEdgeDrag.bind(this);
+		this.handleBottomLeftEdgeDrag = this.handleBottomLeftEdgeDrag.bind(this);
 
 		this.handleDragStart = this.handleDragStart.bind(this);
 		this.handleLineDrag = this.handleLineDrag.bind(this);
@@ -104,7 +107,7 @@ class EachRectangle extends Component {
 		});
 		this.props.onDragComplete(...rest);
 	}
-	handleEdge1Drag(moreProps) {
+	handleTopLeftEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const { end } = this.props;
 
@@ -117,7 +120,7 @@ class EachRectangle extends Component {
 			y2Value: end[1],
 		});
 	}
-	handleEdge2Drag(moreProps) {
+	handleBottomRightEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
 			start
@@ -129,6 +132,33 @@ class EachRectangle extends Component {
 			x1Value: start[0],
 			y1Value: start[1],
 			x2Value,
+			y2Value,
+		});
+	}
+
+	handleTopRightEdgeDrag(moreProps) {
+		const { index, onDrag } = this.props;
+		const { start, end } = this.props;
+
+		const [x2Value, y1Value] = getNewXY(moreProps);
+
+		onDrag(index, {
+			x1Value: start[0],
+			y1Value,
+			x2Value,
+			y2Value: end[1],
+		});
+	}
+	handleBottomLeftEdgeDrag(moreProps) {
+		const { index, onDrag } = this.props;
+		const { start, end } = this.props;
+
+		const [x1Value, y2Value] = getNewXY(moreProps);
+
+		onDrag(index, {
+			x1Value,
+			y1Value: start[1],
+			x2Value: end[0],
 			y2Value,
 		});
 	}
@@ -196,7 +226,7 @@ class EachRectangle extends Component {
 				{this.getEdgeCircle({
 					x: start[0],
 					y: start[1],
-					dragHandler: this.handleEdge1Drag,
+					dragHandler: this.handleTopLeftEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
 					fill: "red",
 					edge: "line1edge1",
@@ -204,7 +234,7 @@ class EachRectangle extends Component {
 				{this.getEdgeCircle({
 					x: end[0],
 					y: end[1],
-					dragHandler: this.handleEdge2Drag,
+					dragHandler: this.handleBottomRightEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
 					fill: "green",
 					edge: "line1edge2",
@@ -216,16 +246,16 @@ class EachRectangle extends Component {
 				{this.getEdgeCircle({
 					x: end[0],
 					y: start[1],
-					// dragHandler: this.handleEdge1Drag,
-					// cursor: "react-stockcharts-move-cursor",
+					dragHandler: this.handleTopRightEdgeDrag,
+					cursor: "react-stockcharts-move-cursor",
 					fill: "blue",
 					edge: "line2edge1",
 				})}
 				{this.getEdgeCircle({
 					x: start[0],
 					y: end[1],
-					// dragHandler: this.handleEdge2Drag,
-					// cursor: "react-stockcharts-move-cursor",
+					dragHandler: this.handleBottomLeftEdgeDrag,
+					cursor: "react-stockcharts-move-cursor",
 					fill: "yellow",
 					edge: "line2edge2",
 				})}
