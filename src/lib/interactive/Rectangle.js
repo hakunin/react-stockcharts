@@ -171,6 +171,7 @@ class Rectangle extends Component {
 					...hoverText
 				};
 
+				console.log(eachAppearance);
 				return <EachRectangle key={idx}
 					ref={this.saveNodeType(idx)}
 					index={idx}
@@ -183,7 +184,6 @@ class Rectangle extends Component {
 					type={type}
 					onDrag={this.handleDragLine}
 					onDragComplete={this.handleDragLineComplete}
-					edgeInteractiveCursor="react-stockcharts-move-cursor"
 					getHoverInteractive={hovering => this.getHoverInteractive(hovering, each)}
 				/>;
 			})}
@@ -270,7 +270,7 @@ Rectangle.defaultProps = {
 		strokeDasharray: "Solid",
 		edgeStrokeWidth: 1,
 		edgeFill: "#d4d422",
-		edgeStroke: "#000000",
+		edgeStroke: "#FF0000",
 		r: 6,
 		fill: "#8AAFE2",
 		fillOpacity: 0.2,

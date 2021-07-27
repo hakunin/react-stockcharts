@@ -381,8 +381,9 @@ RectangleSimple.defaultProps = {
 	onDrag: noop,
 	onDragComplete: noop,
 
+	stroke: "#d4d422",
 	edgeStrokeWidth: 3,
-	edgeStroke: "#000000",
+	edgeStroke: "#FF0000",
 	edgeFill: "#FFFFFF",
 	r: 10,
 	withEdge: false,

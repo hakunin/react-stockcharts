@@ -199,8 +199,6 @@ class EachRectangle extends Component {
 			edgeStrokeWidth,
 			edgeFill,
 			edgeStroke,
-			edgeInteractiveCursor,
-			lineInteractiveCursor,
 			hoverText,
 			selected,
 			start,
@@ -227,7 +225,7 @@ class EachRectangle extends Component {
 					y: start[1],
 					dragHandler: this.handleTopLeftEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "red",
+					fill: edgeStroke,
 					edge: "line1edge1",
 				})}
 				{this.getEdgeCircle({
@@ -235,7 +233,7 @@ class EachRectangle extends Component {
 					y: end[1],
 					dragHandler: this.handleBottomRightEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "green",
+					fill: edgeStroke,
 					edge: "line1edge2",
 				})}
 			</g>
@@ -247,7 +245,7 @@ class EachRectangle extends Component {
 					y: start[1],
 					dragHandler: this.handleTopRightEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "blue",
+					fill: edgeStroke,
 					edge: "line2edge1",
 				})}
 				{this.getEdgeCircle({
@@ -255,7 +253,7 @@ class EachRectangle extends Component {
 					y: end[1],
 					dragHandler: this.handleBottomLeftEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "yellow",
+					fill: edgeStroke,
 					edge: "line2edge2",
 				})}
 			</g>
@@ -279,14 +277,12 @@ class EachRectangle extends Component {
 				edgeStrokeWidth={edgeStrokeWidth}
 				edgeFill={edgeFill}
 				edgeStroke={edgeStroke}
-				edgeInteractiveCursor={edgeInteractiveCursor}
-				lineInteractiveCursor={lineInteractiveCursor}
 				hoverText={hoverText}
 
 				stroke={stroke}
 				strokeWidth={(hover || selected) ? strokeWidth + 1 : strokeWidth}
 				strokeOpacity={strokeOpacity}
-				fill={edgeFill}
+				fill={stroke}
 				fillOpacity={strokeOpacity}
 				interactiveCursorClass="react-stockcharts-move-cursor"
 
@@ -338,14 +334,12 @@ EachRectangle.propTypes = {
 
 	selected: PropTypes.bool,
 
-	// stroke: PropTypes.string.isRequired,
+	stroke: PropTypes.string.isRequired,
 	strokeWidth: PropTypes.number.isRequired,
 	strokeDasharray: PropTypes.oneOf(strokeDashTypes),
 
 	edgeStrokeWidth: PropTypes.number.isRequired,
 	edgeStroke: PropTypes.string.isRequired,
-	// edgeInteractiveCursor: PropTypes.string.isRequired,
-	// lineInteractiveCursor: PropTypes.string.isRequired,
 	edgeFill: PropTypes.string.isRequired,
 	hoverText: PropTypes.object.isRequired,
 };
@@ -361,8 +355,9 @@ EachRectangle.defaultProps = {
 
 	selected: false,
 
-	edgeStroke: "#000000",
-	edgeFill: "#d4d422",
+	stroke: "#d4d422",
+	edgeStroke: "#FF0000",
+	edgeFill: "#FF0000",
 	edgeStrokeWidth: 2,
 	r: 5,
 	strokeWidth: 1,
