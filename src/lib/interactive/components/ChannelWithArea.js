@@ -111,7 +111,7 @@ class ChannelWithArea extends Component {
 			const line = isDefined(line2)
 				? <line
 					strokeWidth={strokeWidth}
-					stroke={"green"}
+					stroke={stroke}
 					strokeOpacity={strokeOpacity}
 					x1={x1}
 					y1={line2.y1}

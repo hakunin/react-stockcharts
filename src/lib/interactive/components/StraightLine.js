@@ -294,25 +294,25 @@ function getHorizontalCoordinates({
 }) {
 	const [xBegin, xFinish] = xScale.domain();
 	const [yBegin, yFinish] = yScale.domain();
-  
+
 	const x1 = xBegin;
 	if (end[0] === start[0]) {
 	  return {
-		x1,
-		y1: yBegin,
-		x2: x1,
-		y2: end[1] > start[1] ? yFinish : yBegin,
+			x1,
+			y1: yBegin,
+			x2: x1,
+			y2: end[1] > start[1] ? yFinish : yBegin,
 	  };
 	}
-  
+
 	const x2 = end[0] > start[0] ? xFinish : xBegin;
-  
+
 	return {
 	  x1,
 	  y1: b,
 	  x2,
-	  y2: b,  
-	}
+	  y2: b,
+	};
 }
 
 StraightLine.propTypes = {

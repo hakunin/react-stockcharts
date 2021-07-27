@@ -41,7 +41,7 @@ class HorizontalLine extends Component {
 				index,
 				...newXYValue
 			}
-        });
+		});
 	}
 	handleDragLineComplete(moreProps) {
 		const { override } = this.state;
@@ -98,22 +98,22 @@ class HorizontalLine extends Component {
 	handleEnd(xyValue, moreProps, e) {
 		const { trends, appearance, type } = this.props;
 
-			const newTrends = [
-				...trends.map(d => ({ ...d, selected: false })),
-				{
-					start: [xyValue[0], xyValue[1]],
-					end: [xyValue[0] + 1, xyValue[1]],
-					selected: true,
-					appearance,
-					type,
-				}
-			];
-			this.setState({
-				current: null,
-				trends: newTrends
-			}, () => {
-				this.props.onComplete(newTrends, moreProps, e);
-			});
+		const newTrends = [
+			...trends.map(d => ({ ...d, selected: false })),
+			{
+				start: [xyValue[0], xyValue[1]],
+				end: [xyValue[0] + 1, xyValue[1]],
+				selected: true,
+				appearance,
+				type,
+			}
+		];
+		this.setState({
+			current: null,
+			trends: newTrends
+		}, () => {
+			this.props.onComplete(newTrends, moreProps, e);
+		});
 	}
 
 	getHoverInteractive(hovering, horizontalLine) {
@@ -130,8 +130,8 @@ class HorizontalLine extends Component {
 		const { hoverText, trends } = this.props;
 		const { current, override } = this.state;
 		const tempLine = isDefined(current) && isDefined(current.end)
-            ? <StraightLine 
-                type={type}
+			? <StraightLine
+				type={type}
 				noHover
 				x1Value={current.start[0]}
 				y1Value={current.start[1]}
@@ -153,8 +153,8 @@ class HorizontalLine extends Component {
 					...HorizontalLine.defaultProps.hoverText,
 					...hoverText
 				};
-                return <EachHorizontalLine 
-                    key={idx}
+				return <EachHorizontalLine
+					key={idx}
 					ref={this.saveNodeType(idx)}
 					index={idx}
 					type={each.type}
@@ -214,7 +214,7 @@ HorizontalLine.propTypes = {
 	currentPositionstrokeOpacity: PropTypes.number,
 	currentPositionRadius: PropTypes.number,
 	type: PropTypes.oneOf([
-		'horizontal'
+		"horizontal"
 	]),
 	hoverText: PropTypes.object.isRequired,
 
@@ -222,8 +222,8 @@ HorizontalLine.propTypes = {
 };
 
 HorizontalLine.defaultProps = {
-    type: 'horizontal',
-    
+	type: "horizontal",
+
 	onComplete: noop,
 	// onStart: noop,
 	// onSelect: noop,

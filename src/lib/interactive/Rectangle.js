@@ -38,7 +38,6 @@ class Rectangle extends Component {
 		this.nodes = [];
 	}
 	handleDragLine(index, newXYValue) {
-		console.log(newXYValue);
 		this.setState({
 			override: {
 				index,
@@ -64,7 +63,7 @@ class Rectangle extends Component {
 					}
 					: {
 						...each,
-						// selected: false,
+						selected: false,
 					});
 
 			this.setState({
@@ -136,7 +135,7 @@ class Rectangle extends Component {
 	}
 
 	render() {
-		const { appearance } = this.props;
+		const { appearance, selected } = this.props;
 		const { enabled, snap, shouldDisableSnap, snapTo, type } = this.props;
 		const { currentPositionRadius, currentPositionStroke } = this.props;
 		const { currentPositionstrokeOpacity, currentPositionStrokeWidth } = this.props;
@@ -148,7 +147,6 @@ class Rectangle extends Component {
 			? <EachRectangle
 				interactive={false}
 				{...current}
-
 				shouldDisableSnap={shouldDisableSnap}
 				snap={snap}
 				snapTo={snapTo}
@@ -158,6 +156,7 @@ class Rectangle extends Component {
 				currentPositionstrokeOpacity={currentPositionstrokeOpacity}
 				currentPositionStrokeWidth={currentPositionStrokeWidth}
 				hoverText={hoverText}
+				selected={selected}
 			/>
 			: null;
 

@@ -63,7 +63,7 @@ class CandleStickChartWithRectangle extends React.Component {
 	handleSelection(interactives) {
 		const state = toObject(interactives, each => {
 			return [
-				`rectangle_${each.chartId}`,
+				"rectangle",
 				each.objects,
 			];
 		});
@@ -77,7 +77,6 @@ class CandleStickChartWithRectangle extends React.Component {
 			enableInteractiveObject: false,
 			rectangle
 		});
-		console.log(this.state.rectangle);
 	}
 	handleHover(hovering, equidistant) {
 		// console.log(hovering, "handleHover");
@@ -137,7 +136,6 @@ class CandleStickChartWithRectangle extends React.Component {
 			.accessor(d => d.macd);
 
 		const { type, data: initialData, width, ratio } = this.props;
-		const { rectangle } = this.state;
 
 		const calculatedData = macdCalculator(ema12(ema26(initialData)));
 		const xScaleProvider = discontinuousTimeScaleProvider
@@ -173,6 +171,7 @@ class CandleStickChartWithRectangle extends React.Component {
 					yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
 					padding={{ top: 10, bottom: 20 }}
 					interactives={{ rectangle: this.state.rectangle }}
+					rectangle
 				>
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
 					<YAxis axisAt="right" orient="right" ticks={5} />
@@ -189,7 +188,7 @@ class CandleStickChartWithRectangle extends React.Component {
 						enabled={this.state.enableInteractiveObject}
 						onStart={() => console.log("START")}
 						onComplete={this.onDrawComplete}
-						rectangle={rectangle}
+						rectangle={this.state.rectangle}
 						isHover={this.handleHover}
 						snap={false}
 						snapTo={d => [d.high, d.low]}
