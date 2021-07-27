@@ -9,6 +9,9 @@ import GenericChartComponent from "../GenericChartComponent";
 import { isDefined, functor } from "../utils";
 import ToolTipText from "./ToolTipText";
 import ToolTipTSpanLabel from "./ToolTipTSpanLabel";
+
+import throttle from "lodash/throttle";
+
 class OHLCTooltip extends Component {
 	constructor(props) {
 		super(props);
@@ -81,8 +84,9 @@ class OHLCTooltip extends Component {
 		};
 
 		if (this.props.getOHLCData) {
-			this.props.getOHLCData({ ...itemsToDisplay,  serverTime: this.props.serverTime });
-		}
+			const throttleOHLC = throttle(this.props.getOHLCData, 200);
+			throttleOHLC({ ...itemsToDisplay,  serverTime: this.props.serverTime });
+	  	}
 		return this.props.children(this.props, moreProps, itemsToDisplay);
 	}
 	render() {
