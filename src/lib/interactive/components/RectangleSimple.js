@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -12,7 +13,7 @@ import {
 	strokeDashTypes,
 } from "../../utils";
 
-class StraightLine extends Component {
+class RectangleSimple extends Component {
 	constructor(props) {
 		super(props);
 
@@ -28,9 +29,47 @@ class StraightLine extends Component {
 			const { mouseXY, xScale } = moreProps;
 			const { chartConfig: { yScale } } = moreProps;
 
-			const hovering = isHovering({
-				x1Value, y1Value,
-				x2Value, y2Value,
+			const hoveringTop = isHovering({
+				x1Value,
+				y1Value,
+				x2Value,
+				y2Value: y1Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
+
+			const hoveringRight = isHovering({
+				x1Value: x2Value,
+				y1Value,
+				x2Value,
+				y2Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
+
+			const hoveringBottom = isHovering({
+				x1Value,
+				y1Value: y2Value,
+				x2Value,
+				y2Value,
+				mouseXY,
+				type,
+				tolerance,
+				xScale,
+				yScale,
+			});
+
+			const hoveringLeft = isHovering({
+				x1Value,
+				y1Value,
+				x2Value: x1Value,
+				y2Value,
 				mouseXY,
 				type,
 				tolerance,
@@ -39,37 +78,51 @@ class StraightLine extends Component {
 			});
 
 			if (getHoverInteractive) {
-				getHoverInteractive(hovering);
+				getHoverInteractive(hoveringTop || hoveringRight || hoveringBottom || hoveringLeft);
 			}
-			return hovering;
+			return hoveringTop || hoveringRight || hoveringBottom || hoveringLeft;
 		}
 		return false;
 	}
 	drawOnCanvas(ctx, moreProps) {
-		const { stroke, strokeWidth, strokeOpacity, strokeDasharray } = this.props;
+		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, type, fill, fillOpacity, isFill } = this.props;
+
 		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
 
+		const width = x2 - x1;
+		const height = y2 - y1;
+
 		ctx.lineWidth = strokeWidth;
-		ctx.strokeStyle = hexToRGBA(stroke, strokeOpacity);
-		ctx.setLineDash(getStrokeDasharray(strokeDasharray).split(","));
 
 		ctx.beginPath();
-		ctx.moveTo(x1, y1);
-		ctx.lineTo(x2, y2);
+		ctx.rect(x1, y1, width, height);
 		ctx.stroke();
+		if (fill) {
+			ctx.fillStyle = hexToRGBA(fill, fillOpacity);
+			ctx.fill();
+		}
 	}
 	renderSVG(moreProps) {
-		const { stroke, strokeWidth, strokeOpacity, strokeDasharray } = this.props;
+		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, fill } = this.props;
 
 		const lineWidth = strokeWidth;
 
+
 		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
+
 		return (
-			<line
-				x1={x1} y1={y1} x2={x2} y2={y2}
-				stroke={stroke} strokeWidth={lineWidth}
-				strokeDasharray={getStrokeDasharray(strokeDasharray)}
-				strokeOpacity={strokeOpacity} />
+			<rect
+				strokeWidth={strokeWidth}
+				lineWidth={lineWidth}
+				strokeDasharray={strokeDasharray}
+				stroke={stroke}
+				strokeOpacity={strokeOpacity}
+				x1={x1}
+				y1={y1}
+				x2={x2}
+				y2={y2}
+				fill={fill}
+			/>
 		);
 	}
 	render() {
@@ -92,7 +145,7 @@ class StraightLine extends Component {
 			onHover={onHover}
 			onUnHover={onUnHover}
 
-			drawOn={["mousemove", "pan", "drag"]}
+			drawOn={["mousemove", "mouseleave", "pan", "drag"]}
 		/>;
 	}
 }
@@ -168,6 +221,7 @@ function helper(props, moreProps) {
 		yScale,
 	});
 
+
 	const x1 = xScale(modLine.x1);
 	const y1 = yScale(modLine.y1);
 	const x2 = xScale(modLine.x2);
@@ -205,13 +259,9 @@ export function generateLine({
 			return getRayCoordinates({
 				type, start, end, xScale, yScale, m, b
 			});
-		case "LINE":
+		case "RECTANGLE":
 			return getLineCoordinates({
 				type, start, end, xScale, yScale, m, b
-			});
-		case "horizontal":
-			return getHorizontalCoordinates({
-				start, end, xScale, yScale, m, b,
 			});
 	}
 }
@@ -285,44 +335,14 @@ function getLineCoordinates({
 	};
 }
 
-function getHorizontalCoordinates({
-	start,
-	end,
-	xScale,
-	yScale,
-	b,
-}) {
-	const [xBegin, xFinish] = xScale.domain();
-	const [yBegin, yFinish] = yScale.domain();
-
-	const x1 = xBegin;
-	if (end[0] === start[0]) {
-	  return {
-			x1,
-			y1: yBegin,
-			x2: x1,
-			y2: end[1] > start[1] ? yFinish : yBegin,
-	  };
-	}
-
-	const x2 = end[0] > start[0] ? xFinish : xBegin;
-
-	return {
-	  x1,
-	  y1: b,
-	  x2,
-	  y2: b,
-	};
-}
-
-StraightLine.propTypes = {
+RectangleSimple.propTypes = {
 	x1Value: PropTypes.any.isRequired,
 	x2Value: PropTypes.any.isRequired,
 	y1Value: PropTypes.any.isRequired,
 	y2Value: PropTypes.any.isRequired,
 
 	interactiveCursorClass: PropTypes.string,
-	stroke: PropTypes.string.isRequired,
+	// stroke: PropTypes.string.isRequired,
 	strokeWidth: PropTypes.number.isRequired,
 	strokeOpacity: PropTypes.number.isRequired,
 	strokeDasharray: PropTypes.oneOf(strokeDashTypes),
@@ -331,7 +351,7 @@ StraightLine.propTypes = {
 		"XLINE", // extends from -Infinity to +Infinity
 		"RAY", // extends to +/-Infinity in one direction
 		"LINE", // extends between the set bounds
-		"horizontal"
+		"RECTANGLE"
 	]).isRequired,
 
 	onEdge1Drag: PropTypes.func.isRequired,
@@ -354,15 +374,16 @@ StraightLine.propTypes = {
 	selected: PropTypes.bool.isRequired,
 };
 
-StraightLine.defaultProps = {
+RectangleSimple.defaultProps = {
 	onEdge1Drag: noop,
 	onEdge2Drag: noop,
 	onDragStart: noop,
 	onDrag: noop,
 	onDragComplete: noop,
 
+	stroke: "#d4d422",
 	edgeStrokeWidth: 3,
-	edgeStroke: "#000000",
+	edgeStroke: "#FF0000",
 	edgeFill: "#FFFFFF",
 	r: 10,
 	withEdge: false,
@@ -373,4 +394,4 @@ StraightLine.defaultProps = {
 	selected: false,
 };
 
-export default StraightLine;
+export default RectangleSimple;

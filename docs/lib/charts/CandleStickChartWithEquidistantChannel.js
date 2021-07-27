@@ -96,43 +96,43 @@ class CandleStickChartWithEquidistantChannel extends React.Component {
 		});
 	}
 	handleHover(hovering, equidistant) {
-        console.log(hovering, "handleHover");
-        console.log(equidistant.hovering, "handleHover");
-    }
+		// console.log(hovering, "handleHover");
+		// console.log(equidistant.hovering, "handleHover");
+	}
 	onKeyPress(e) {
 		const keyCode = e.which;
 		console.log(keyCode);
 		switch (keyCode) {
-		case 46: { // DEL
+			case 46: { // DEL
 
-			const channels_1 = this.state.channels_1
-				.filter(each => !each.selected);
-			const channels_3 = this.state.channels_3
-				.filter(each => !each.selected);
+				const channels_1 = this.state.channels_1
+					.filter(each => !each.selected);
+				const channels_3 = this.state.channels_3
+					.filter(each => !each.selected);
 
-			this.canvasNode.cancelDrag();
-			this.setState({
-				channels_1,
-				channels_3,
-			});
-			break;
-		}
-		case 27: { // ESC
-			this.node.terminate();
-			this.canvasNode.cancelDrag();
+				this.canvasNode.cancelDrag();
+				this.setState({
+					channels_1,
+					channels_3,
+				});
+				break;
+			}
+			case 27: { // ESC
+				this.node.terminate();
+				this.canvasNode.cancelDrag();
 
-			this.setState({
-				enableInteractiveObject: false
-			});
-			break;
-		}
-		case 68:   // D - Draw drawing object
-		case 69: { // E - Enable drawing object
-			this.setState({
-				enableInteractiveObject: true
-			});
-			break;
-		}
+				this.setState({
+					enableInteractiveObject: false
+				});
+				break;
+			}
+			case 68:   // D - Draw drawing object
+			case 69: { // E - Enable drawing object
+				this.setState({
+					enableInteractiveObject: true
+				});
+				break;
+			}
 		}
 	}
 	render() {
@@ -191,7 +191,7 @@ class CandleStickChartWithEquidistantChannel extends React.Component {
 				<Chart id={1} height={400}
 					yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
 					padding={{ top: 10, bottom: 20 }}
-					interactives={{channels_1: this.state.channels_1 }}
+					interactives={{ channels_1: this.state.channels_1 }}
 				>
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
 					<YAxis axisAt="right" orient="right" ticks={5} />

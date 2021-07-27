@@ -1,18 +1,19 @@
-
-
+/* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { isDefined, isNotDefined, noop } from "../utils";
+import { isDefined, isNotDefined, noop, strokeDashTypes } from "../utils";
+
 import {
+	getValueFromOverride,
 	terminate,
 	saveNodeType,
 	isHoverForInteractiveType,
 } from "./utils";
-import EachRectangle from "./wrapper/EachRectangle";
-import { getSlope, getYIntercept } from "./components/StraightLine";
+
 import MouseLocationIndicator from "./components/MouseLocationIndicator";
 import HoverTextNearMouse from "./components/HoverTextNearMouse";
+import EachRectangle from "./wrapper/EachRectangle";
 
 class Rectangle extends Component {
 	constructor(props) {
@@ -20,144 +21,143 @@ class Rectangle extends Component {
 
 		this.handleStart = this.handleStart.bind(this);
 		this.handleEnd = this.handleEnd.bind(this);
-		this.handleDrawChannel = this.handleDrawChannel.bind(this);
-		this.handleDragChannel = this.handleDragChannel.bind(this);
-		this.handleDragChannelComplete = this.handleDragChannelComplete.bind(this);
+		this.handleDrawLine = this.handleDrawLine.bind(this);
+		this.handleDragLine = this.handleDragLine.bind(this);
+		this.handleDragLineComplete = this.handleDragLineComplete.bind(this);
 
 		this.terminate = terminate.bind(this);
 		this.saveNodeType = saveNodeType.bind(this);
 
 		this.getSelectionState = isHoverForInteractiveType("rectangle")
 			.bind(this);
+
 		this.getHoverInteractive = this.getHoverInteractive.bind(this);
 
-		this.nodes = [];
 		this.state = {
 		};
+		this.nodes = [];
 	}
-	handleDragChannel(index, newXYValue) {
+	handleDragLine(index, newXYValue) {
 		this.setState({
 			override: {
 				index,
-				...newXYValue
+				start: [newXYValue.x1Value, newXYValue.y1Value],
+				end: [newXYValue.x2Value, newXYValue.y2Value],
+				...newXYValue,
 			}
 		});
+
 	}
-	handleDragChannelComplete(moreProps) {
+	handleDragLineComplete(moreProps) {
 		const { override } = this.state;
 		const { rectangle } = this.props;
 
 		if (isDefined(override)) {
-			const { index, ...rest } = override;
-			const newRectangle = rectangle
-				.map((each, idx) => idx === index
-					? { ...each, ...rest, selected: true }
-					: each);
+			const newTrends = rectangle
+				.map((each, idx) => idx === override.index
+					? {
+						...each,
+						start: [override.x1Value, override.y1Value],
+						end: [override.x2Value, override.y2Value],
+						selected: true,
+					}
+					: {
+						...each,
+						selected: false,
+					});
+
 			this.setState({
 				override: null,
 			}, () => {
-				this.props.onComplete(newRectangle, moreProps);
+				this.props.onComplete(newTrends, moreProps);
 			});
 		}
 	}
-	handleDrawChannel(xyValue) {
+	handleDrawLine(xyValue) {
 		const { current } = this.state;
-
-		if (isDefined(current)
-				&& isDefined(current.startXY)) {
+		if (isDefined(current) && isDefined(current.start)) {
 			this.mouseMoved = true;
-			if (isNotDefined(current.dy)) {
-				this.setState({
-					current: {
-						startXY: current.startXY,
-						endXY: xyValue,
-					}
-				});
-			} else {
-				const m = getSlope(current.startXY, current.endXY);
-				const b = getYIntercept(m, current.endXY);
-				const y = m * xyValue[0] + b;
-				const dy = xyValue[1] - y;
-
-				this.setState({
-					current: {
-						...current,
-						dy,
-					}
-				});
-			}
-		}
-	}
-	handleStart(xyValue) {
-		const { current } = this.state;
-
-		if (isNotDefined(current) || isNotDefined(current.startXY)) {
-			this.mouseMoved = false;
 			this.setState({
 				current: {
-					startXY: xyValue,
-					endXY: null,
+					start: current.start,
+					end: xyValue,
 				}
+			});
+		}
+	}
+	handleStart(xyValue, moreProps, e) {
+		const { current } = this.state;
+
+		if (isNotDefined(current) || isNotDefined(current.start)) {
+			this.mouseMoved = false;
+
+			this.setState({
+				current: {
+					start: xyValue,
+					end: null,
+				},
 			}, () => {
-				this.props.onStart();
+				this.props.onStart(moreProps, e);
 			});
 		}
 	}
 	handleEnd(xyValue, moreProps, e) {
 		const { current } = this.state;
-		const { rectangle, appearance } = this.props;
+		const { rectangle, appearance, type } = this.props;
 
 		if (this.mouseMoved
 			&& isDefined(current)
-			&& isDefined(current.startXY)
+			&& isDefined(current.start)
 		) {
-
-			if (isNotDefined(current.dy)) {
-				this.setState({
-					current: {
-						...current,
-						dy: 0
-					}
-				});
-			} else {
-				const newRectangle = [
-					...rectangle.map(d => ({ ...d, selected: false })),
-					{
-						...current, selected: true,
-						appearance,
-					}
-				];
-
-				this.setState({
-					current: null,
-				}, () => {
-
-					this.props.onComplete(newRectangle, moreProps, e);
-				});
-			}
+			const newTrends = [
+				...rectangle.map(d => ({ ...d, selected: false })),
+				{
+					...current,
+					selected: true,
+					end: xyValue,
+					appearance,
+					type,
+				}
+			];
+			this.setState({
+				current: null,
+				rectangle: newTrends
+			}, () => {
+				this.props.onComplete(newTrends, moreProps, e);
+			});
 		}
 	}
-	getHoverInteractive(hovering, equidistant) {
-		equidistant.hovering = hovering;
+
+	getHoverInteractive(hovering, rectangle) {
+		rectangle.hovering = hovering;
 		const { isHover } = this.props;
-		isHover(hovering, equidistant);
+		isHover(hovering, rectangle);
 	}
 
 	render() {
-		const { appearance } = this.props;
-		const { enabled } = this.props;
+		const { appearance, selected } = this.props;
+		const { enabled, snap, shouldDisableSnap, snapTo, type } = this.props;
 		const { currentPositionRadius, currentPositionStroke } = this.props;
-		const { currentPositionOpacity, currentPositionStrokeWidth } = this.props;
-		const { rectangle, hoverText } = this.props;
+		const { currentPositionstrokeOpacity, currentPositionStrokeWidth } = this.props;
+		const { hoverText, rectangle } = this.props;
 		const { current, override } = this.state;
 		const overrideIndex = isDefined(override) ? override.index : null;
 
-		const tempChannel = isDefined(current) && isDefined(current.endXY)
+		const tempLine = isDefined(current) && isDefined(current.end)
 			? <EachRectangle
 				interactive={false}
 				{...current}
-				appearance={appearance}
-				hoverText={hoverText} />
+				shouldDisableSnap={shouldDisableSnap}
+				snap={snap}
+				snapTo={snapTo}
+				type={type}
+				currentPositionRadius={currentPositionRadius}
+				currentPositionStroke={currentPositionStroke}
+				currentPositionstrokeOpacity={currentPositionstrokeOpacity}
+				currentPositionStrokeWidth={currentPositionStrokeWidth}
+				hoverText={hoverText}
+				selected={selected}
+			/>
 			: null;
 
 		return <g>
@@ -166,92 +166,115 @@ class Rectangle extends Component {
 					? { ...appearance, ...each.appearance }
 					: appearance;
 
+				const hoverTextWithDefault = {
+					...Rectangle.defaultProps.hoverText,
+					...hoverText
+				};
+
+				console.log(eachAppearance);
 				return <EachRectangle key={idx}
 					ref={this.saveNodeType(idx)}
 					index={idx}
 					selected={each.selected}
-					hoverText={hoverText}
+					hoverText={hoverTextWithDefault}
 					{...(idx === overrideIndex ? override : each)}
 					appearance={eachAppearance}
-					onDrag={this.handleDragChannel}
-					onDragComplete={this.handleDragChannelComplete}
+					snap={snap}
+					snapTo={snapTo}
+					type={type}
+					onDrag={this.handleDragLine}
+					onDragComplete={this.handleDragLineComplete}
 					getHoverInteractive={hovering => this.getHoverInteractive(hovering, each)}
 				/>;
 			})}
-			{tempChannel}
+			{tempLine}
 			<MouseLocationIndicator
 				enabled={enabled}
 				snap={false}
 				r={currentPositionRadius}
 				stroke={currentPositionStroke}
-				opacity={currentPositionOpacity}
+				opacity={currentPositionstrokeOpacity}
 				strokeWidth={currentPositionStrokeWidth}
 				onMouseDown={this.handleStart}
 				onClick={this.handleEnd}
-				onMouseMove={this.handleDrawChannel} />
+				onMouseMove={this.handleDrawLine} />
 		</g>;
+
+
 	}
 }
 
-
 Rectangle.propTypes = {
+	snap: PropTypes.bool.isRequired,
 	enabled: PropTypes.bool.isRequired,
+	snapTo: PropTypes.func,
+	shouldDisableSnap: PropTypes.func.isRequired,
 
 	onStart: PropTypes.func.isRequired,
 	onComplete: PropTypes.func.isRequired,
-	onSelect: PropTypes.func.isRequired,
+	onSelect: PropTypes.func,
 
 	currentPositionStroke: PropTypes.string,
 	currentPositionStrokeWidth: PropTypes.number,
-	currentPositionOpacity: PropTypes.number,
+	currentPositionstrokeOpacity: PropTypes.number,
 	currentPositionRadius: PropTypes.number,
-
+	type: PropTypes.oneOf([
+		"XLINE", // extends from -Infinity to +Infinity
+		"RAY", // extends to +/-Infinity in one direction
+		"LINE", // extends between the set bounds
+		"RECTANGLE"
+	]).isRequired,
 	hoverText: PropTypes.object.isRequired,
+
 	rectangle: PropTypes.array.isRequired,
 
 	appearance: PropTypes.shape({
+		isFill: true,
 		stroke: PropTypes.string.isRequired,
 		strokeOpacity: PropTypes.number.isRequired,
 		strokeWidth: PropTypes.number.isRequired,
-		fill: PropTypes.string.isRequired,
-		fillOpacity: PropTypes.number.isRequired,
-		edgeStroke: PropTypes.string.isRequired,
-		edgeFill: PropTypes.string.isRequired,
-		edgeFill2: PropTypes.string.isRequired,
+		strokeDasharray: PropTypes.oneOf(strokeDashTypes),
 		edgeStrokeWidth: PropTypes.number.isRequired,
-		r: PropTypes.number.isRequired,
+		edgeFill: PropTypes.string.isRequired,
+		edgeStroke: PropTypes.string.isRequired,
 	}).isRequired
 };
 
 Rectangle.defaultProps = {
+	type: "RECTANGLE",
+
 	onStart: noop,
 	onComplete: noop,
 	onSelect: noop,
 
 	currentPositionStroke: "#000000",
-	currentPositionOpacity: 1,
+	currentPositionstrokeOpacity: 1,
 	currentPositionStrokeWidth: 3,
-	currentPositionRadius: 4,
+	currentPositionRadius: 0,
 
+	shouldDisableSnap: e => (e.button === 2 || e.shiftKey),
 	hoverText: {
 		...HoverTextNearMouse.defaultProps,
 		enable: true,
-		bgHeight: 18,
-		bgWidth: 120,
+		bgHeight: "auto",
+		bgWidth: "auto",
 		text: "Click to select object",
+		selectedText: "",
 	},
 	rectangle: [],
+
 	appearance: {
 		stroke: "#000000",
 		strokeOpacity: 1,
 		strokeWidth: 1,
-		fill: "#8AAFE2",
-		fillOpacity: 0.7,
-		edgeStroke: "#FF0000",
-		edgeFill: "#FF0000",
-		edgeFill2: "#FF0000",
+		strokeDasharray: "Solid",
 		edgeStrokeWidth: 1,
+		edgeFill: "#d4d422",
+		edgeStroke: "#FF0000",
 		r: 6,
+		fill: "#8AAFE2",
+		fillOpacity: 0.2,
+		text: "",
 	}
 };
 

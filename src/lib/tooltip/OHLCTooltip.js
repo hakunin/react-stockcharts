@@ -16,7 +16,7 @@ class OHLCTooltip extends Component {
 	}
 
 	componentDidUpdate(props) {
-		console.log(props);
+		// console.log(props);
 	}
 
 	renderSVG(moreProps) {
