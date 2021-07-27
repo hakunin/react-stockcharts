@@ -63,7 +63,7 @@ class CandleStickChartWithRectangle extends React.Component {
 	handleSelection(interactives) {
 		const state = toObject(interactives, each => {
 			return [
-				`channels_${each.chartId}`,
+				`rectangle_${each.chartId}`,
 				each.objects,
 			];
 		});
@@ -77,41 +77,41 @@ class CandleStickChartWithRectangle extends React.Component {
 			enableInteractiveObject: false,
 			rectangle
 		});
-		console.log(this.state.rectangle)
+		console.log(this.state.rectangle);
 	}
 	handleHover(hovering, equidistant) {
-        // console.log(hovering, "handleHover");
-        // console.log(equidistant.hovering, "handleHover");
-    }
+		// console.log(hovering, "handleHover");
+		// console.log(equidistant.hovering, "handleHover");
+	}
 	onKeyPress(e) {
 		const keyCode = e.which;
 		console.log(keyCode);
 		switch (keyCode) {
-		case 46: { // DEL
+			case 46: { // DEL
 
-			const rectangle = this.state.rectangle
-				.filter(each => !each.selected);
+				const rectangle = this.state.rectangle
+					.filter(each => !each.selected);
 
-			this.canvasNode.cancelDrag();
-			this.setState({ rectangle });
-			break;
-		}
-		case 27: { // ESC
-			this.node.terminate();
-			this.canvasNode.cancelDrag();
+				this.canvasNode.cancelDrag();
+				this.setState({ rectangle });
+				break;
+			}
+			case 27: { // ESC
+				this.node.terminate();
+				this.canvasNode.cancelDrag();
 
-			this.setState({
-				enableInteractiveObject: false
-			});
-			break;
-		}
-		case 68:   // D - Draw drawing object
-		case 69: { // E - Enable drawing object
-			this.setState({
-				enableInteractiveObject: true
-			});
-			break;
-		}
+				this.setState({
+					enableInteractiveObject: false
+				});
+				break;
+			}
+			case 68:   // D - Draw drawing object
+			case 69: { // E - Enable drawing object
+				this.setState({
+					enableInteractiveObject: true
+				});
+				break;
+			}
 		}
 	}
 	render() {
@@ -167,19 +167,19 @@ class CandleStickChartWithRectangle extends React.Component {
 				displayXAccessor={displayXAccessor}
 				xExtents={xExtents}
 			>
-				<Chart 
-					id={1} 
+				<Chart
+					id={1}
 					height={400}
 					yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
 					padding={{ top: 10, bottom: 20 }}
-					interactives={{rectangle: this.state.rectangle }}
+					interactives={{ rectangle: this.state.rectangle }}
 				>
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<MouseCoordinateY
 						at="right"
 						orient="right"
-						displayFormat={format(".2f")} 
+						displayFormat={format(".2f")}
 					/>
 					<CandlestickSeries />
 					<OHLCTooltip origin={[-40, 0]}/>
@@ -202,7 +202,7 @@ class CandleStickChartWithRectangle extends React.Component {
 					enabled={!this.state.enableInteractiveObject}
 					getInteractiveNodes={this.getInteractiveNodes}
 					drawingObjectMap={{
-						Rectangle: "channels"
+						Rectangle: "rectangle"
 					}}
 					onSelect={this.handleSelection}
 				/>

@@ -38,21 +38,22 @@ class Rectangle extends Component {
 		this.nodes = [];
 	}
 	handleDragLine(index, newXYValue) {
+		console.log(newXYValue);
 		this.setState({
 			override: {
 				index,
-				...newXYValue,
 				start: [newXYValue.x1Value, newXYValue.y1Value],
 				end: [newXYValue.x2Value, newXYValue.y2Value],
+				...newXYValue,
 			}
 		});
 
 	}
 	handleDragLineComplete(moreProps) {
 		const { override } = this.state;
-		if (isDefined(override)) {
+		const { rectangle } = this.props;
 
-			const { rectangle } = this.props;
+		if (isDefined(override)) {
 			const newTrends = rectangle
 				.map((each, idx) => idx === override.index
 					? {
@@ -112,7 +113,8 @@ class Rectangle extends Component {
 			const newTrends = [
 				...rectangle.map(d => ({ ...d, selected: false })),
 				{
-					...current, selected: true,
+					...current,
+					selected: true,
 					end: xyValue,
 					appearance,
 					type,
@@ -125,8 +127,6 @@ class Rectangle extends Component {
 				this.props.onComplete(newTrends, moreProps, e);
 			});
 		}
-
-		console.log(this.state);
 	}
 
 	getHoverInteractive(hovering, rectangle) {

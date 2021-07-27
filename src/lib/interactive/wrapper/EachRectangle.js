@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 /* eslint-disable no-debugger */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -50,14 +51,13 @@ class EachRectangle extends Component {
 		}
 	}
 	handleDragStart() {
-		const {
-			x1Value, y1Value,
-			x2Value, y2Value,
-		} = this.props;
+		const { start, end } = this.props;
 
 		this.dragStart = {
-			x1Value, y1Value,
-			x2Value, y2Value,
+			x1Value: start[0],
+			y1Value: start[1],
+			x2Value: end[0],
+			y2Value: end[1],
 		};
 	}
 	handleLineDrag(moreProps) {
@@ -260,7 +260,7 @@ class EachRectangle extends Component {
 				})}
 			</g>
 			: null;
-		console.log(hover, selected);
+
 		return <g>
 			<RectangleSimple
 				ref={this.saveNodeType("rectangle")}
