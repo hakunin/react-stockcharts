@@ -136,7 +136,7 @@ class Rectangle extends Component {
 
 	render() {
 		const { appearance, selected } = this.props;
-		const { enabled, snap, shouldDisableSnap, snapTo, type } = this.props;
+		const { enabled, type } = this.props;
 		const { currentPositionRadius, currentPositionStroke } = this.props;
 		const { currentPositionstrokeOpacity, currentPositionStrokeWidth } = this.props;
 		const { hoverText, rectangle } = this.props;
@@ -147,16 +147,10 @@ class Rectangle extends Component {
 			? <EachRectangle
 				interactive={false}
 				{...current}
-				shouldDisableSnap={shouldDisableSnap}
-				snap={snap}
-				snapTo={snapTo}
 				type={type}
-				currentPositionRadius={currentPositionRadius}
-				currentPositionStroke={currentPositionStroke}
-				currentPositionstrokeOpacity={currentPositionstrokeOpacity}
-				currentPositionStrokeWidth={currentPositionStrokeWidth}
 				hoverText={hoverText}
 				selected={selected}
+				appearance={appearance}
 			/>
 			: null;
 
@@ -171,7 +165,6 @@ class Rectangle extends Component {
 					...hoverText
 				};
 
-				console.log(eachAppearance);
 				return <EachRectangle key={idx}
 					ref={this.saveNodeType(idx)}
 					index={idx}
@@ -179,8 +172,6 @@ class Rectangle extends Component {
 					hoverText={hoverTextWithDefault}
 					{...(idx === overrideIndex ? override : each)}
 					appearance={eachAppearance}
-					snap={snap}
-					snapTo={snapTo}
 					type={type}
 					onDrag={this.handleDragLine}
 					onDragComplete={this.handleDragLineComplete}
@@ -205,10 +196,7 @@ class Rectangle extends Component {
 }
 
 Rectangle.propTypes = {
-	snap: PropTypes.bool.isRequired,
 	enabled: PropTypes.bool.isRequired,
-	snapTo: PropTypes.func,
-	shouldDisableSnap: PropTypes.func.isRequired,
 
 	onStart: PropTypes.func.isRequired,
 	onComplete: PropTypes.func.isRequired,
@@ -219,9 +207,6 @@ Rectangle.propTypes = {
 	currentPositionstrokeOpacity: PropTypes.number,
 	currentPositionRadius: PropTypes.number,
 	type: PropTypes.oneOf([
-		"XLINE", // extends from -Infinity to +Infinity
-		"RAY", // extends to +/-Infinity in one direction
-		"LINE", // extends between the set bounds
 		"RECTANGLE"
 	]).isRequired,
 	hoverText: PropTypes.object.isRequired,
@@ -229,11 +214,12 @@ Rectangle.propTypes = {
 	rectangle: PropTypes.array.isRequired,
 
 	appearance: PropTypes.shape({
-		isFill: true,
 		stroke: PropTypes.string.isRequired,
 		strokeOpacity: PropTypes.number.isRequired,
 		strokeWidth: PropTypes.number.isRequired,
 		strokeDasharray: PropTypes.oneOf(strokeDashTypes),
+		fill: PropTypes.string.isRequired,
+		fillOpacity: PropTypes.number.isRequired,
 		edgeStrokeWidth: PropTypes.number.isRequired,
 		edgeFill: PropTypes.string.isRequired,
 		edgeStroke: PropTypes.string.isRequired,
@@ -259,7 +245,6 @@ Rectangle.defaultProps = {
 		bgHeight: "auto",
 		bgWidth: "auto",
 		text: "Click to select object",
-		selectedText: "",
 	},
 	rectangle: [],
 
@@ -268,13 +253,14 @@ Rectangle.defaultProps = {
 		strokeOpacity: 1,
 		strokeWidth: 1,
 		strokeDasharray: "Solid",
+
+		fill: "#d4d422",
+		fillOpacity: 0.2,
+
 		edgeStrokeWidth: 1,
-		edgeFill: "#d4d422",
+		edgeFill: "#FF0000",
 		edgeStroke: "#FF0000",
 		r: 6,
-		fill: "#8AAFE2",
-		fillOpacity: 0.2,
-		text: "",
 	}
 };
 

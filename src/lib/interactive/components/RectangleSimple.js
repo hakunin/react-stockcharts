@@ -9,7 +9,6 @@ import {
 	isDefined,
 	noop,
 	hexToRGBA,
-	getStrokeDasharray,
 	strokeDashTypes,
 } from "../../utils";
 
@@ -85,7 +84,7 @@ class RectangleSimple extends Component {
 		return false;
 	}
 	drawOnCanvas(ctx, moreProps) {
-		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, type, fill, fillOpacity, isFill } = this.props;
+		const { strokeWidth, fill, fillOpacity } = this.props;
 
 		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
 
@@ -105,15 +104,12 @@ class RectangleSimple extends Component {
 	renderSVG(moreProps) {
 		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, fill } = this.props;
 
-		const lineWidth = strokeWidth;
-
-
 		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
 
 		return (
 			<rect
 				strokeWidth={strokeWidth}
-				lineWidth={lineWidth}
+				lineWidth={strokeWidth}
 				strokeDasharray={strokeDasharray}
 				stroke={stroke}
 				strokeOpacity={strokeOpacity}
@@ -251,67 +247,11 @@ export function generateLine({
 	const b /* y intercept */ = getYIntercept(m, start);
 
 	switch (type) {
-		case "XLINE":
-			return getXLineCoordinates({
-				type, start, end, xScale, yScale, m, b
-			});
-		case "RAY":
-			return getRayCoordinates({
-				type, start, end, xScale, yScale, m, b
-			});
 		case "RECTANGLE":
 			return getLineCoordinates({
 				type, start, end, xScale, yScale, m, b
 			});
 	}
-}
-
-function getXLineCoordinates({
-	start, end, xScale, yScale, m, b
-}) {
-	const [xBegin, xFinish] = xScale.domain();
-	const [yBegin, yFinish] = yScale.domain();
-
-	if (end[0] === start[0]) {
-		return {
-			x1: end[0], y1: yBegin,
-			x2: end[0], y2: yFinish,
-		};
-	}
-	const [x1, x2] = end[0] > start[0]
-		? [xBegin, xFinish]
-		: [xFinish, xBegin];
-
-	return {
-		x1, y1: m * x1 + b,
-		x2, y2: m * x2 + b
-	};
-}
-
-function getRayCoordinates({
-	start, end, xScale, yScale, m, b
-}) {
-	const [xBegin, xFinish] = xScale.domain();
-	const [yBegin, yFinish] = yScale.domain();
-
-	const x1 = start[0];
-	if (end[0] === start[0]) {
-		return {
-			x1,
-			y1: start[1],
-			x2: x1,
-			y2: end[1] > start[1] ? yFinish : yBegin,
-		};
-	}
-
-	const x2 = end[0] > start[0]
-		? xFinish
-		: xBegin;
-
-	return {
-		x1, y1: m * x1 + b,
-		x2, y2: m * x2 + b
-	};
 }
 
 function getLineCoordinates({
@@ -342,52 +282,35 @@ RectangleSimple.propTypes = {
 	y2Value: PropTypes.any.isRequired,
 
 	interactiveCursorClass: PropTypes.string,
-	// stroke: PropTypes.string.isRequired,
-	strokeWidth: PropTypes.number.isRequired,
-	strokeOpacity: PropTypes.number.isRequired,
-	strokeDasharray: PropTypes.oneOf(strokeDashTypes),
 
-	type: PropTypes.oneOf([
-		"XLINE", // extends from -Infinity to +Infinity
-		"RAY", // extends to +/-Infinity in one direction
-		"LINE", // extends between the set bounds
-		"RECTANGLE"
-	]).isRequired,
+	type: PropTypes.oneOf(["RECTANGLE"]).isRequired,
 
-	onEdge1Drag: PropTypes.func.isRequired,
-	onEdge2Drag: PropTypes.func.isRequired,
 	onDragStart: PropTypes.func.isRequired,
 	onDrag: PropTypes.func.isRequired,
 	onDragComplete: PropTypes.func.isRequired,
 	onHover: PropTypes.func,
 	onUnHover: PropTypes.func,
 
-	defaultClassName: PropTypes.string,
-
-	r: PropTypes.number.isRequired,
-	edgeFill: PropTypes.string.isRequired,
-	edgeStroke: PropTypes.string.isRequired,
-	edgeStrokeWidth: PropTypes.number.isRequired,
-	withEdge: PropTypes.bool.isRequired,
 	children: PropTypes.func.isRequired,
 	tolerance: PropTypes.number.isRequired,
 	selected: PropTypes.bool.isRequired,
+
+	stroke: PropTypes.string.isRequired,
+	strokeOpacity: PropTypes.number.isRequired,
+	strokeWidth: PropTypes.number.isRequired,
+	strokeDasharray: PropTypes.oneOf(strokeDashTypes),
+	fill: PropTypes.string.isRequired,
+	fillOpacity: PropTypes.number.isRequired,
+	edgeStrokeWidth: PropTypes.number.isRequired,
+	edgeFill: PropTypes.string.isRequired,
+	edgeStroke: PropTypes.string.isRequired,
 };
 
 RectangleSimple.defaultProps = {
-	onEdge1Drag: noop,
-	onEdge2Drag: noop,
 	onDragStart: noop,
 	onDrag: noop,
 	onDragComplete: noop,
 
-	stroke: "#d4d422",
-	edgeStrokeWidth: 3,
-	edgeStroke: "#FF0000",
-	edgeFill: "#FFFFFF",
-	r: 10,
-	withEdge: false,
-	strokeWidth: 1,
 	strokeDasharray: "Solid",
 	children: noop,
 	tolerance: 7,

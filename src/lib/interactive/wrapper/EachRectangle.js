@@ -26,9 +26,6 @@ class EachRectangle extends Component {
 		this.handleDragStart = this.handleDragStart.bind(this);
 		this.handleLineDrag = this.handleLineDrag.bind(this);
 
-		// this.handleEdge1DragStart = this.handleEdge1DragStart.bind(this);
-		// this.handleEdge2DragStart = this.handleEdge2DragStart.bind(this);
-
 		this.handleDragComplete = this.handleDragComplete.bind(this);
 
 		this.getEdgeCircle = this.getEdgeCircle.bind(this);
@@ -91,16 +88,6 @@ class EachRectangle extends Component {
 			y2Value: newY2Value,
 		});
 	}
-	// handleEdge1DragStart() {
-	// 	this.setState({
-	// 		anchor: "edge2"
-	// 	});
-	// }
-	// handleEdge2DragStart() {
-	// 	this.setState({
-	// 		anchor: "edge1"
-	// 	});
-	// }
 	handleDragComplete(...rest) {
 		this.setState({
 			anchor: undefined
@@ -164,13 +151,10 @@ class EachRectangle extends Component {
 	}
 	getEdgeCircle({ x, y, dragHandler, cursor, fill, edge }) {
 		const { hover } = this.state;
-		const {
-			edgeStroke,
-			edgeStrokeWidth,
-			r,
-			selected,
-			onDragComplete
-		} = this.props;
+		const { appearance } = this.props;
+		const { edgeFill, edgeStroke, edgeStrokeWidth, r } = appearance;
+
+		const { selected, onDragComplete } = this.props;
 
 		return <ClickableCircle
 			ref={this.saveNodeType(edge)}
@@ -191,21 +175,29 @@ class EachRectangle extends Component {
 	render() {
 		const {
 			type,
-			stroke,
-			strokeWidth,
-			strokeOpacity,
-			strokeDasharray,
-			r,
-			edgeStrokeWidth,
-			edgeFill,
-			edgeStroke,
-			hoverText,
 			selected,
 			start,
 			end,
 			onDragComplete,
 			interactive,
+			hoverText,
+			appearance
 		} = this.props;
+
+		const {
+			stroke,
+			strokeOpacity,
+			strokeWidth,
+			strokeDasharray,
+
+			fill,
+			fillOpacity,
+
+			edgeStrokeWidth,
+			edgeFill,
+			edgeStroke,
+			r,
+		} = appearance;
 
 		const {
 			enable: hoverTextEnabled,
@@ -282,8 +274,8 @@ class EachRectangle extends Component {
 				stroke={stroke}
 				strokeWidth={(hover || selected) ? strokeWidth + 1 : strokeWidth}
 				strokeOpacity={strokeOpacity}
-				fill={stroke}
-				fillOpacity={strokeOpacity}
+				fill={fill}
+				fillOpacity={fillOpacity}
 				interactiveCursorClass="react-stockcharts-move-cursor"
 
 				onDragStart={this.handleDragStart}
@@ -320,49 +312,31 @@ EachRectangle.propTypes = {
 	y2Value: PropTypes.any,
 
 	index: PropTypes.number,
+	selected: PropTypes.bool,
+	hoverText: PropTypes.object.isRequired,
 
 	onDrag: PropTypes.func.isRequired,
-	onEdge1Drag: PropTypes.func.isRequired,
-	onEdge2Drag: PropTypes.func.isRequired,
 	onDragComplete: PropTypes.func.isRequired,
-	onSelect: PropTypes.func.isRequired,
-	onUnSelect: PropTypes.func.isRequired,
 
-	r: PropTypes.number.isRequired,
-	strokeOpacity: PropTypes.number.isRequired,
-	defaultClassName: PropTypes.string,
-
-	selected: PropTypes.bool,
-
-	stroke: PropTypes.string.isRequired,
-	strokeWidth: PropTypes.number.isRequired,
-	strokeDasharray: PropTypes.oneOf(strokeDashTypes),
-
-	edgeStrokeWidth: PropTypes.number.isRequired,
-	edgeStroke: PropTypes.string.isRequired,
-	edgeFill: PropTypes.string.isRequired,
-	hoverText: PropTypes.object.isRequired,
+	appearance: PropTypes.shape({
+		stroke: PropTypes.string.isRequired,
+		strokeOpacity: PropTypes.number.isRequired,
+		strokeWidth: PropTypes.number.isRequired,
+		strokeDasharray: PropTypes.oneOf(strokeDashTypes),
+		fill: PropTypes.string.isRequired,
+		fillOpacity: PropTypes.number.isRequired,
+		edgeStrokeWidth: PropTypes.number.isRequired,
+		edgeFill: PropTypes.string.isRequired,
+		edgeStroke: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 EachRectangle.defaultProps = {
 	onDrag: noop,
-	onEdge1Drag: noop,
-	onEdge2Drag: noop,
 	onDragComplete: noop,
-	onSelect: noop,
-	onUnSelect: noop,
 	interactive: true,
 
 	selected: false,
-
-	stroke: "#d4d422",
-	edgeStroke: "#FF0000",
-	edgeFill: "#FF0000",
-	edgeStrokeWidth: 2,
-	r: 5,
-	strokeWidth: 1,
-	strokeOpacity: 0.2,
-	strokeDasharray: "Solid",
 	hoverText: {
 		enable: false,
 	}
