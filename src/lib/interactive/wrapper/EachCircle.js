@@ -18,9 +18,8 @@ class EachCircle extends Component {
 		super(props);
 
 		this.handleCenterEdgeDrag = this.handleCenterEdgeDrag.bind(this);
-		this.handleBottomRightEdgeDrag = this.handleBottomRightEdgeDrag.bind(this);
 
-		this.handleTopRightEdgeDrag = this.handleTopRightEdgeDrag.bind(this);
+		this.handleTopEdgeDrag = this.handleTopEdgeDrag.bind(this);
 		this.handleBottomEdgeDrag = this.handleBottomEdgeDrag.bind(this);
 
 		this.handleDragStart = this.handleDragStart.bind(this);
@@ -94,6 +93,19 @@ class EachCircle extends Component {
 		});
 		this.props.onDragComplete(...rest);
 	}
+	handleTopEdgeDrag(moreProps) {
+		const { index, onDrag } = this.props;
+		const { start, end } = this.props;
+
+		const [x1Value, y2Value] = getNewXY(moreProps);
+
+		onDrag(index, {
+			x1Value: start[0],
+			y1Value: start[1],
+			x2Value: end[0],
+			y2Value: start[1] - (y2Value - start[1]),
+		});
+	}
 	handleCenterEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const { end } = this.props;
@@ -107,35 +119,6 @@ class EachCircle extends Component {
 			y2Value: end[1],
 		});
 	}
-	handleBottomRightEdgeDrag(moreProps) {
-		const { index, onDrag } = this.props;
-		const {
-			start
-		} = this.props;
-
-		const [x2Value, y2Value] = getNewXY(moreProps);
-
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value: start[1],
-			x2Value,
-			y2Value,
-		});
-	}
-
-	handleTopRightEdgeDrag(moreProps) {
-		const { index, onDrag } = this.props;
-		const { start, end } = this.props;
-
-		const [x2Value, y1Value] = getNewXY(moreProps);
-
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value,
-			x2Value,
-			y2Value: end[1],
-		});
-	}
 	handleBottomEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const { start, end } = this.props;
@@ -143,7 +126,7 @@ class EachCircle extends Component {
 		const [x1Value, y2Value] = getNewXY(moreProps);
 
 		onDrag(index, {
-			x1Value,
+			x1Value: start[0],
 			y1Value: start[1],
 			x2Value: end[0],
 			y2Value,
@@ -210,15 +193,12 @@ class EachCircle extends Component {
 			? { onHover: this.handleHover, onUnHover: this.handleHover }
 			: {};
 
-		console.log("start:", start)
-		console.log("end:", end)
-
 		const topEdge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
 					x: start[0],
 					y: start[1] + (start[1] - end[1]),
-					dragHandler: this.handleCenterEdgeDrag,
+					dragHandler: this.handleTopEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
 					fill: "blue",
 					edge: "line0edge0",
@@ -230,7 +210,7 @@ class EachCircle extends Component {
 				{this.getEdgeCircle({
 					x: start[0],
 					y: start[1],
-					dragHandler: this.handleCenterEdgeDrag,
+					// dragHandler: this.handleCenterEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
 					fill: "green",
 					edge: "line1edge1",
