@@ -28,45 +28,9 @@ class CircleSimple extends Component {
 			const { mouseXY, xScale } = moreProps;
 			const { chartConfig: { yScale } } = moreProps;
 
-			const hoveringTop = isHovering({
+			const hoveringCenter = isHovering({
 				x1Value,
-				y1Value,
-				x2Value,
-				y2Value: y1Value,
-				mouseXY,
-				type,
-				tolerance,
-				xScale,
-				yScale,
-			});
-
-			const hoveringRight = isHovering({
-				x1Value: x2Value,
-				y1Value,
-				x2Value,
-				y2Value,
-				mouseXY,
-				type,
-				tolerance,
-				xScale,
-				yScale,
-			});
-
-			const hoveringBottom = isHovering({
-				x1Value,
-				y1Value: y2Value,
-				x2Value,
-				y2Value,
-				mouseXY,
-				type,
-				tolerance,
-				xScale,
-				yScale,
-			});
-
-			const hoveringLeft = isHovering({
-				x1Value,
-				y1Value,
+				y1Value: y1Value + (y1Value - y2Value),
 				x2Value: x1Value,
 				y2Value,
 				mouseXY,
@@ -77,9 +41,9 @@ class CircleSimple extends Component {
 			});
 
 			if (getHoverInteractive) {
-				getHoverInteractive(hoveringTop || hoveringRight || hoveringBottom || hoveringLeft);
+				getHoverInteractive(hoveringCenter);
 			}
-			return hoveringTop || hoveringRight || hoveringBottom || hoveringLeft;
+			return hoveringCenter;
 		}
 		return false;
 	}
@@ -122,7 +86,7 @@ class CircleSimple extends Component {
 				stroke={stroke}
 				strokeOpacity={strokeOpacity}
 				strokeWidth={strokeWidth}
-				fill="#FFF" />
+				fill={fill} />
 			// <rect
 			// 	strokeWidth={strokeWidth}
 			// 	lineWidth={strokeWidth}
@@ -159,24 +123,6 @@ class CircleSimple extends Component {
 
 			drawOn={["mousemove", "mouseleave", "pan", "drag"]}
 		/>;
-	}
-}
-
-export function isHovering2(start, end, [mouseX, mouseY], tolerance) {
-	const m = getSlope(start, end);
-
-	if (isDefined(m)) {
-		const b = getYIntercept(m, end);
-		const y = m * mouseX + b;
-		return (mouseY < y + tolerance)
-			&& mouseY > (y - tolerance)
-			&& mouseX > Math.min(start[0], end[0]) - tolerance
-			&& mouseX < Math.max(start[0], end[0]) + tolerance;
-	} else {
-		return mouseY >= Math.min(start[1], end[1])
-			&& mouseY <= Math.max(start[1], end[1])
-			&& mouseX < start[0] + tolerance
-			&& mouseX > start[0] - tolerance;
 	}
 }
 

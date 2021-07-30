@@ -17,9 +17,8 @@ class EachCircle extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleCenterEdgeDrag = this.handleCenterEdgeDrag.bind(this);
-
 		this.handleTopEdgeDrag = this.handleTopEdgeDrag.bind(this);
+		// this.handleCenterEdgeDrag = this.handleCenterEdgeDrag.bind(this);
 		this.handleBottomEdgeDrag = this.handleBottomEdgeDrag.bind(this);
 
 		this.handleDragStart = this.handleDragStart.bind(this);
@@ -106,19 +105,19 @@ class EachCircle extends Component {
 			y2Value: start[1] - (y2Value - start[1]),
 		});
 	}
-	handleCenterEdgeDrag(moreProps) {
-		const { index, onDrag } = this.props;
-		const { end } = this.props;
+	// handleCenterEdgeDrag(moreProps) {
+	// 	const { index, onDrag } = this.props;
+	// 	const { end } = this.props;
 
-		const [x1Value, y1Value] = getNewXY(moreProps);
+	// 	const [x1Value, y1Value] = getNewXY(moreProps);
 
-		onDrag(index, {
-			x1Value,
-			y1Value,
-			x2Value: end[0],
-			y2Value: end[1],
-		});
-	}
+	// 	onDrag(index, {
+	// 		x1Value,
+	// 		y1Value,
+	// 		x2Value: end[0],
+	// 		y2Value: end[1],
+	// 	});
+	// }
 	handleBottomEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const { start, end } = this.props;
@@ -263,7 +262,7 @@ class EachCircle extends Component {
 				getHoverInteractive={this.props.getHoverInteractive}
 			/>
 			{topEdge}
-			{centerEdge}
+			{/* {centerEdge} */}
 			{bottomEdge}
 			<HoverTextNearMouse
 				show={hoverTextEnabled && hover && !selected}
