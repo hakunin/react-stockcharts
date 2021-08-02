@@ -97,7 +97,7 @@ class EachCircle extends Component {
 
 		const [x1Value, y2Value] = getNewXY(moreProps);
 
-		if ((start[1] - (start[1] - (y2Value - start[1]))) > 0) {
+		if ((start[1] - (start[1] - (y2Value - start[1]))) > 0.5) {
 			onDrag(index, {
 				x1Value: start[0],
 				y1Value: start[1],
@@ -112,7 +112,7 @@ class EachCircle extends Component {
 
 		const [x1Value, y2Value] = getNewXY(moreProps);
 
-		if ((start[1] - y2Value) > 0) {
+		if ((start[1] - y2Value) > 0.5) {
 			onDrag(index, {
 				x1Value: start[0],
 				y1Value: start[1],
@@ -189,7 +189,7 @@ class EachCircle extends Component {
 					y: start[1] + (start[1] - end[1]),
 					dragHandler: this.handleTopEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "blue",
+					fill: edgeFill,
 					edge: "line0edge0",
 				})}
 			</g>
@@ -201,7 +201,7 @@ class EachCircle extends Component {
 					y: end[1],
 					dragHandler: this.handleBottomEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: "red",
+					fill: edgeFill,
 					edge: "line2edge2",
 				})}
 			</g>
