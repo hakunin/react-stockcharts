@@ -254,7 +254,7 @@ Circle.defaultProps = {
 		strokeWidth: 1,
 		strokeDasharray: "Solid",
 
-		fill: "#d4d422",
+		fill: "#e33232",
 		fillOpacity: 0.2,
 
 		edgeStrokeWidth: 1,

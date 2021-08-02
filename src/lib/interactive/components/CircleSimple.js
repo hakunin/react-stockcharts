@@ -28,17 +28,11 @@ class CircleSimple extends Component {
 			const { mouseXY, xScale } = moreProps;
 			const { chartConfig: { yScale } } = moreProps;
 
-			const hoveringCenter = isHovering({
-				x1Value,
-				y1Value: y1Value + (y1Value - y2Value),
-				x2Value: x1Value,
-				y2Value,
-				mouseXY,
-				type,
-				tolerance,
-				xScale,
-				yScale,
-			});
+			const start = [xScale(x1Value), yScale(y1Value)];
+			const end = [xScale(x2Value), yScale(y2Value)];
+			const r = start[1] - end[1];
+
+			const hoveringCenter = Math.pow(mouseXY[0] - start[0], 2) + Math.pow(mouseXY[1] - start[1], 2) <= r * r;
 
 			if (getHoverInteractive) {
 				getHoverInteractive(hoveringCenter);
@@ -57,20 +51,13 @@ class CircleSimple extends Component {
 
 		ctx.lineWidth = strokeWidth;
 
-		// ctx.beginPath();
-		// ctx.rect(x1, y1, width, height);
-		// ctx.stroke();
-		// if (fill) {
-		// 	ctx.fillStyle = hexToRGBA(fill, fillOpacity);
-		// 	ctx.fill();
-		// }
-
 		ctx.beginPath();
 		ctx.arc(x1, y1, height, 0, 2 * Math.PI, true);
 		if (fill) {
 			ctx.fillStyle = hexToRGBA(fill, fillOpacity);
 			ctx.fill();
 		}
+		ctx.stroke();
 	}
 	renderSVG(moreProps) {
 		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, fill } = this.props;
@@ -86,19 +73,8 @@ class CircleSimple extends Component {
 				stroke={stroke}
 				strokeOpacity={strokeOpacity}
 				strokeWidth={strokeWidth}
-				fill={fill} />
-			// <rect
-			// 	strokeWidth={strokeWidth}
-			// 	lineWidth={strokeWidth}
-			// 	strokeDasharray={strokeDasharray}
-			// 	stroke={stroke}
-			// 	strokeOpacity={strokeOpacity}
-			// 	x1={x1}
-			// 	y1={y1}
-			// 	x2={x2}
-			// 	y2={y2}
-			// 	fill={fill}
-			// />
+				fill={fill}
+			/>
 		);
 	}
 	render() {
@@ -123,46 +99,6 @@ class CircleSimple extends Component {
 
 			drawOn={["mousemove", "mouseleave", "pan", "drag"]}
 		/>;
-	}
-}
-
-export function isHovering({
-	x1Value, y1Value,
-	x2Value, y2Value,
-	mouseXY,
-	type,
-	tolerance,
-	xScale,
-	yScale,
-}) {
-
-	const line = generateLine({
-		type,
-		start: [x1Value, y1Value],
-		end: [x2Value, y2Value],
-		xScale,
-		yScale,
-	});
-
-	const start = [xScale(line.x1), yScale(line.y1)];
-	const end = [xScale(line.x2), yScale(line.y2)];
-
-	const m = getSlope(start, end);
-	const [mouseX, mouseY] = mouseXY;
-
-	if (isDefined(m)) {
-		const b = getYIntercept(m, end);
-		const y = m * mouseX + b;
-
-		return mouseY < (y + tolerance)
-			&& mouseY > (y - tolerance)
-			&& mouseX > Math.min(start[0], end[0]) - tolerance
-			&& mouseX < Math.max(start[0], end[0]) + tolerance;
-	} else {
-		return mouseY >= Math.min(start[1], end[1])
-			&& mouseY <= Math.max(start[1], end[1])
-			&& mouseX < start[0] + tolerance
-			&& mouseX > start[0] - tolerance;
 	}
 }
 
