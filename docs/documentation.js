@@ -107,6 +107,7 @@ const INTERACTIVE = {
 		require("./lib/page/FibonacciInteractiveIndicatorPage").default,
 		require("./lib/page/EquidistantChannelPage").default,
 		require("./lib/page/RectanglePage").default,
+		require("./lib/page/CirclePage").default,
 		require("./lib/page/StandardDeviationChannelPage").default,
 		require("./lib/page/GannFanPage").default,
 		require("./lib/page/TextPage").default,
@@ -144,7 +145,7 @@ function compressString(string) {
 }
 
 function parseData(parse) {
-	return function (d) {
+	return function(d) {
 		d.date = parse(d.date);
 		d.open = +d.open;
 		d.high = +d.high;
@@ -157,7 +158,7 @@ function parseData(parse) {
 }
 
 if (!window.Modernizr.fetch || !window.Modernizr.promises) {
-	require.ensure(["whatwg-fetch", "es6-promise"], function (require) {
+	require.ensure(["whatwg-fetch", "es6-promise"], function(require) {
 		require("es6-promise");
 		require("whatwg-fetch");
 		loadPage();
@@ -203,7 +204,7 @@ function loadPage() {
 		.then(response => response.json());
 
 	Promise.all([promiseMSFT, promiseMSFTfull, promiseIntraDayContinuous, promiseIntraDayDiscontinuous, promiseCompare, promiseBubbleData, promiseBarData, promisegroupedBarData])
-		.then(function (values) {
+		.then(function(values) {
 			const [MSFT, MSFTfull, intraDayContinuous, intraDayDiscontinuous, compareData, bubbleData, barData, groupedBarData] = values;
 			const horizontalBarData = barData.map(({ x, y }) => ({ x: y, y: x }));
 			const horizontalGroupedBarData = groupedBarData.map(d => {
@@ -238,8 +239,8 @@ function renderPage(data, dataFull, intraDayContinuous, intraDayDiscontinuous, c
 			};
 		}
 		handleRouteChange() {
-			let selected = location.hash.replace("#/", "");
-			let selectedPage = pages.filter((page) => (compressString(page.title) === compressString(selected)));
+			const selected = location.hash.replace("#/", "");
+			const selectedPage = pages.filter((page) => (compressString(page.title) === compressString(selected)));
 			if (selectedPage.length > 0) {
 				this.setState({
 					selectedPage: selectedPage[0]
@@ -250,7 +251,7 @@ function renderPage(data, dataFull, intraDayContinuous, intraDayDiscontinuous, c
 			window.addEventListener("hashchange", this.handleRouteChange, false);
 		}
 		render() {
-			var Page = this.state.selectedPage;
+			const Page = this.state.selectedPage;
 			return (
 				<div>
 					<Nav />
@@ -325,7 +326,7 @@ function renderPartialPage(data, dataFull, intraDayContinuous, intraDayDiscontin
 	// Kagi
 	// PointAndFigure
 	// Renko
-	var Chart = require("./lib/charts/CandleStickChartWithZoomPan").default;
+	const Chart = require("./lib/charts/CandleStickChartWithZoomPan").default;
 	// data, dataFull, compareData
 	class ExamplesPage extends React.Component {
 		render() {
