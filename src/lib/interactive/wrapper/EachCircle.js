@@ -18,7 +18,6 @@ class EachCircle extends Component {
 		super(props);
 
 		this.handleTopEdgeDrag = this.handleTopEdgeDrag.bind(this);
-		// this.handleCenterEdgeDrag = this.handleCenterEdgeDrag.bind(this);
 		this.handleBottomEdgeDrag = this.handleBottomEdgeDrag.bind(this);
 
 		this.handleDragStart = this.handleDragStart.bind(this);
@@ -98,38 +97,29 @@ class EachCircle extends Component {
 
 		const [x1Value, y2Value] = getNewXY(moreProps);
 
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value: start[1],
-			x2Value: end[0],
-			y2Value: start[1] - (y2Value - start[1]),
-		});
+		if ((start[1] - (start[1] - (y2Value - start[1]))) > 0) {
+			onDrag(index, {
+				x1Value: start[0],
+				y1Value: start[1],
+				x2Value: end[0],
+				y2Value: start[1] - (y2Value - start[1]),
+			});
+		}
 	}
-	// handleCenterEdgeDrag(moreProps) {
-	// 	const { index, onDrag } = this.props;
-	// 	const { end } = this.props;
-
-	// 	const [x1Value, y1Value] = getNewXY(moreProps);
-
-	// 	onDrag(index, {
-	// 		x1Value,
-	// 		y1Value,
-	// 		x2Value: end[0],
-	// 		y2Value: end[1],
-	// 	});
-	// }
 	handleBottomEdgeDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const { start, end } = this.props;
 
 		const [x1Value, y2Value] = getNewXY(moreProps);
 
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value: start[1],
-			x2Value: end[0],
-			y2Value,
-		});
+		if ((start[1] - y2Value) > 0) {
+			onDrag(index, {
+				x1Value: start[0],
+				y1Value: start[1],
+				x2Value: end[0],
+				y2Value,
+			});
+		}
 	}
 	getEdgeCircle({ x, y, dragHandler, cursor, fill, edge }) {
 		const { hover } = this.state;
@@ -204,18 +194,6 @@ class EachCircle extends Component {
 				})}
 			</g>
 			: null;
-		const centerEdge = isDefined(start) && isDefined(end)
-			? <g>
-				{this.getEdgeCircle({
-					x: start[0],
-					y: start[1],
-					// dragHandler: this.handleCenterEdgeDrag,
-					cursor: "react-stockcharts-move-cursor",
-					fill: "green",
-					edge: "line1edge1",
-				})}
-			</g>
-			: null;
 		const bottomEdge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
@@ -262,7 +240,6 @@ class EachCircle extends Component {
 				getHoverInteractive={this.props.getHoverInteractive}
 			/>
 			{topEdge}
-			{/* {centerEdge} */}
 			{bottomEdge}
 			<HoverTextNearMouse
 				show={hoverTextEnabled && hover && !selected}
