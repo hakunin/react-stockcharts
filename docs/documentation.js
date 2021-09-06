@@ -108,6 +108,7 @@ const INTERACTIVE = {
 		require("./lib/page/EquidistantChannelPage").default,
 		require("./lib/page/RectanglePage").default,
 		require("./lib/page/CirclePage").default,
+		require("./lib/page/SquarePage").default,
 		require("./lib/page/StandardDeviationChannelPage").default,
 		require("./lib/page/GannFanPage").default,
 		require("./lib/page/TextPage").default,
