@@ -254,7 +254,7 @@ Square.defaultProps = {
 		strokeWidth: 1,
 		strokeDasharray: "Solid",
 
-		fill: "#e33232",
+		fill: "#000000",
 		fillOpacity: 0.2,
 
 		edgeStrokeWidth: 1,

@@ -18,9 +18,7 @@ class EachSquare extends Component {
 		super(props);
 
 		this.handleTopLeftEdgeDrag = this.handleTopLeftEdgeDrag.bind(this);
-		this.handleBottomRightEdgeDrag = this.handleBottomRightEdgeDrag.bind(this);
 
-		this.handleTopRightEdgeDrag = this.handleTopRightEdgeDrag.bind(this);
 		this.handleBottomLeftEdgeDrag = this.handleBottomLeftEdgeDrag.bind(this);
 
 		this.handleDragStart = this.handleDragStart.bind(this);
@@ -97,40 +95,10 @@ class EachSquare extends Component {
 		const { end } = this.props;
 
 		const [x1Value, y1Value] = getNewXY(moreProps);
-
 		onDrag(index, {
 			x1Value,
 			y1Value,
 			x2Value: end[0],
-			y2Value: end[1],
-		});
-	}
-	handleBottomRightEdgeDrag(moreProps) {
-		const { index, onDrag } = this.props;
-		const {
-			start
-		} = this.props;
-
-		const [x2Value, y2Value] = getNewXY(moreProps);
-
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value: start[1],
-			x2Value,
-			y2Value,
-		});
-	}
-
-	handleTopRightEdgeDrag(moreProps) {
-		const { index, onDrag } = this.props;
-		const { start, end } = this.props;
-
-		const [x2Value, y1Value] = getNewXY(moreProps);
-
-		onDrag(index, {
-			x1Value: start[0],
-			y1Value,
-			x2Value,
 			y2Value: end[1],
 		});
 	}
@@ -209,46 +177,26 @@ class EachSquare extends Component {
 			? { onHover: this.handleHover, onUnHover: this.handleHover }
 			: {};
 
-		console.log(end[0], end[1], 'green');
-		console.log(this.props, 'props');
 		const line1Edge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
-					x: start[0], // x1
-					y: start[1], // y1
+					x: start[0],
+					y: start[1],
 					dragHandler: this.handleTopLeftEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: 'yellow',
+					fill: edgeFill,
 					edge: "line1edge1",
-				})}
-				{this.getEdgeCircle({
-					x: end[0],
-					y: end[1],
-					
-
-					dragHandler: this.handleBottomRightEdgeDrag,
-					cursor: "react-stockcharts-move-cursor",
-					fill: 'green',
-					edge: "line1edge2",
 				})}
 			</g>
 			: null;
 		const line2Edge = isDefined(start) && isDefined(end)
 			? <g>
 				{this.getEdgeCircle({
-					x: end[0],
-					y: start[1],
-					dragHandler: this.handleTopRightEdgeDrag,
-					cursor: "react-stockcharts-move-cursor",
-					fill: edgeStroke,
-					edge: "line2edge1",
-				})}
-				{this.getEdgeCircle({
 					x: start[0],
 					y: end[1],
 					dragHandler: this.handleBottomLeftEdgeDrag,
 					cursor: "react-stockcharts-move-cursor",
-					fill: 'blue',
+					fill: edgeFill,
 					edge: "line2edge2",
 				})}
 			</g>

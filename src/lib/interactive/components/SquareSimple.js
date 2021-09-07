@@ -86,12 +86,10 @@ class SquareSimple extends Component {
 		const { strokeWidth, fill, fillOpacity } = this.props;
 
 		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
-		console.log(x1, y1, x2, y2, 'sadadasdasdasda');
-		const width = x2 - x1;
-		const height = x2 - x1; 
+		const width = y2 - y1;
+		const height = y2 - y1; 
 
 		ctx.lineWidth = strokeWidth;
-
 		ctx.beginPath();
 		ctx.rect(x1, y1, width, height);
 		ctx.stroke();
@@ -205,7 +203,6 @@ export function isHovering({
 
 function helper(props, moreProps) {
 	const { x1Value, x2Value, y1Value, y2Value, type } = props;
-	console.log(x1Value, x2Value, y1Value, y2Value,'llllllllllllllllllllllll');
 	const { xScale, chartConfig: { yScale } } = moreProps;
 
 	const modLine = generateLine({
@@ -261,14 +258,14 @@ function getLineCoordinates({
 		return {
 			x1,
 			y1: start[1],
-			x2: x1,
+			x2: x1+(y1-y2),
 			y2: end[1],
 		};
 	}
 
 	return {
-		x1, y1,
-		x2, y2,
+		x1: x1, y1,
+		x2: x1+(y1-y2), y2,
 	};
 }
 
