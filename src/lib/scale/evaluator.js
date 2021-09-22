@@ -50,8 +50,8 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 
 		if (typeof clamp === "function") {
 			clampedDomain = clamp(
-				clampedDomain, 
-				xAccessor(head(data)), 
+				clampedDomain,
+				xAccessor(head(data)),
 				xAccessor(last(data)),
 				left,
 				right
@@ -63,11 +63,17 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 					clampedDomain[1]
 				];
 			}
-
+			const checkDirection = () => {
+				if (right < xAccessor(last(data))) {
+					return Math.min(right, xAccessor(last(data)));
+				} else {
+					return Math.min(right, xAccessor(last(data))) + (Math.min(right, xAccessor(last(data))) - clampedDomain[0]) * 0.2;
+				}
+			};
 			if (clamp === "right" || clamp === "both" || clamp === true) {
 				clampedDomain = [
 					clampedDomain[0],
-					Math.min(right, xAccessor(last(data)))
+					checkDirection(),
 				];
 			}
 		}
@@ -136,7 +142,7 @@ function canShowTheseManyPeriods(width, arrayLength, maxThreshold, minThreshold,
 	return arrayLength > showMinThreshold(width, minThreshold, data) && arrayLength < showMaxThreshold(width, maxThreshold);
 }
 
-function showMinThreshold(width, threshold, data) {
+function showMinThreshold(width, threshold) {
 	return Math.max(1, Math.ceil(width * threshold));
 }
 
