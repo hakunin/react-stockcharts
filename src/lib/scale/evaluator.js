@@ -67,7 +67,7 @@ function extentsWrapper(useWholeData, clamp, pointsPerPxThreshold, minPointsPerP
 				if (right < xAccessor(last(data))) {
 					return Math.min(right, xAccessor(last(data)));
 				} else {
-					return Math.min(right, xAccessor(last(data))) + (Math.min(right, xAccessor(last(data))) - clampedDomain[0]) * 0.2;
+					return Math.min(right, xAccessor(last(data))) + (Math.min(right, xAccessor(last(data))) - clampedDomain[0]) * 0.15;
 				}
 			};
 			if (clamp === "right" || clamp === "both" || clamp === true) {
