@@ -88,7 +88,7 @@ class ClickableCircle extends Component {
 }
 
 function helper(props, moreProps) {
-	const { xyProvider, cx, cy, placement, width, height, degress } = props;
+	const { xyProvider, cx, cy, placement, height } = props;
 
 	if (isDefined(xyProvider)) {
 		return xyProvider(moreProps);
@@ -96,19 +96,19 @@ function helper(props, moreProps) {
 
 	const { xScale, chartConfig: { yScale } } = moreProps;
 
-	if (placement === 'top') {
-        const x = xScale(cx);
-        const y = yScale(cy) - height / 2 - 5;
+	if (placement === "top") {
+		const x = xScale(cx);
+		const y = yScale(cy) - height / 2 - 5;
 
-        return [x, y];
-    }
+		return [x, y];
+	}
 
-    if (placement === 'bottom') {
-        const x = xScale(cx);
-        const y = yScale(cy)  + height / 2 + 5 ;
+	if (placement === "bottom") {
+		const x = xScale(cx);
+		const y = yScale(cy)  + height / 2 + 5;
 
-        return [x, y];
-    }
+		return [x, y];
+	}
 
 	const x = xScale(cx);
 	const y = yScale(cy);

@@ -95,7 +95,7 @@ class EachCircle extends Component {
 		const { index, onDrag } = this.props;
 		const { start, end } = this.props;
 
-		const [x1Value, y2Value] = getNewXY(moreProps);
+		const [y2Value] = getNewXY(moreProps);
 
 		if ((start[1] - (start[1] - (y2Value - start[1]))) > 0.5) {
 			onDrag(index, {
@@ -110,7 +110,7 @@ class EachCircle extends Component {
 		const { index, onDrag } = this.props;
 		const { start, end } = this.props;
 
-		const [x1Value, y2Value] = getNewXY(moreProps);
+		const [y2Value] = getNewXY(moreProps);
 
 		if ((start[1] - y2Value) > 0.5) {
 			onDrag(index, {
@@ -124,7 +124,7 @@ class EachCircle extends Component {
 	getEdgeCircle({ x, y, dragHandler, cursor, fill, edge }) {
 		const { hover } = this.state;
 		const { appearance } = this.props;
-		const { edgeFill, edgeStroke, edgeStrokeWidth, r } = appearance;
+		const { edgeStroke, edgeStrokeWidth, r } = appearance;
 
 		const { selected, onDragComplete } = this.props;
 
