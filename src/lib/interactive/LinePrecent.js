@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
@@ -77,7 +78,6 @@ class LinePrecent extends Component {
   }
   handleDrawLine(xyValue, e, moreProps) {
     const { current } = this.state;
-    const { percentFormat } = this.props;
 
     if (isDefined(current) && isDefined(current.start)) {
       this.mouseMoved = true;
@@ -140,11 +140,11 @@ class LinePrecent extends Component {
     }
   }
   getHoverInteractive(hovering, precentlLine) {
-		precentlLine.hovering = hovering;
-		const { isHover } = this.props;
-		isHover(hovering, precentlLine);
+    precentlLine.hovering = hovering;
+    const { isHover } = this.props;
+    isHover(hovering, precentlLine);
   }
-  
+
   render() {
     const { appearance } = this.props;
     const { enabled, snap, shouldDisableSnap, snapTo } = this.props;

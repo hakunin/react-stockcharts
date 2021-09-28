@@ -53,7 +53,6 @@ class EachLinePrecent extends Component {
         }
         return prevState;
     }
-
     handleLineDragStart() {
         const { x1Value, y1Value, x2Value, y2Value } = this.props;
 
@@ -338,18 +337,6 @@ export function getNewXY(moreProps) {
     const newY = Math.min(Math.max(y, small), big);
 
     return [x, newY];
-}
-
-function helper({ x1, y1, x2, y2 }) {
-    const dy = y2 - y1;
-    const retracements = [100, 61.8, 50, 38.2, 23.6, 0].map((each) => ({
-        percent: each,
-        x1,
-        x2,
-        y: y2 - (each / 100) * dy,
-    }));
-
-    return retracements;
 }
 
 EachLinePrecent.propTypes = {
