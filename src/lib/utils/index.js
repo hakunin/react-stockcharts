@@ -39,7 +39,7 @@ export function path(loc = []) {
 	const key = Array.isArray(loc) ? loc : [loc];
 	const length = key.length;
 
-	return function (obj, defaultValue) {
+	return function(obj, defaultValue) {
 		if (length === 0) return isDefined(obj) ? obj : defaultValue;
 
 		let index = 0;
@@ -55,7 +55,7 @@ export function functor(v) {
 }
 
 export function createVerticalLinearGradient(stops) {
-	return function (moreProps, ctx) {
+	return function(moreProps, ctx) {
 		const { chartConfig: { height } } = moreProps;
 
 		const grd = ctx.createLinearGradient(0, height, 0, 0);
@@ -214,11 +214,13 @@ export function last(array, accessor) {
 }
 
 export function current(array, accessor) {
-	let lastTick, obvs = [], length = array.length, value = 0;
+	let lastTick, value = 0;
+	const obvs = [], length = array.length;
+
 	for (let i = 0; i < length; i++) {
-		let curTick = array[i];
-		if (i != 0) {
-			let lastObvValue = obvs[i - 1];
+		const curTick = array[i];
+		if (i !== 0) {
+			const lastObvValue = obvs[i - 1];
 			if (curTick[0] >= lastTick) {
 				value = lastObvValue + accessor(curTick);
 			} else {
