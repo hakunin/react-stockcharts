@@ -9,11 +9,6 @@ import { getXValue } from "../../utils/ChartDataUtil";
 import ClickableCircle from "./ClickableCircle";
 import ClickableRect from "./ClickableRect";
 import BackgroundHover from "./BackgroundHover";
-import AnnotateShape from "./AnnotateShape";
-
-function pointDirection(x1, y1, x2, y2) {
-    return Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-}
 
 class Transform extends Component {
     constructor(props) {
@@ -52,7 +47,6 @@ class Transform extends Component {
             edgeLeft,
             edgeAngleTop,
             edgeAngleBottom,
-            appearance,
         } = this.props;
         const { mouseXY } = moreProps;
         const {
@@ -160,7 +154,7 @@ class Transform extends Component {
         });
     }
     handleEdgeLeftDragStart(moreProps) {
-        const { position, edgeLeft } = this.props;
+        const { edgeLeft } = this.props;
         const { mouseXY } = moreProps;
         const {
             chartConfig: { yScale },
@@ -196,12 +190,8 @@ class Transform extends Component {
         } = this.props;
         const {
             xScale,
-            mouseXY: [mouseX, mouseY],
-            chartConfig: { yScale },
-            xAccessor,
-            currentItem,
+            mouseXY: [mouseX],
         } = moreProps;
-        const { dx, dy } = this.dragStartPosition;
 
         const newWidth = Math.abs(xScale(position[0]) - mouseX  + width / 2);
 
@@ -217,7 +207,7 @@ class Transform extends Component {
     }
 
     handleEdgeRightDragStart(moreProps) {
-        const { position, edgeRight } = this.props;
+        const { edgeRight } = this.props;
         const { mouseXY } = moreProps;
         const {
             chartConfig: { yScale },
@@ -253,12 +243,8 @@ class Transform extends Component {
         } = this.props;
         const {
             xScale,
-            mouseXY: [mouseX, mouseY],
-            chartConfig: { yScale },
-            xAccessor,
-            currentItem,
+            mouseXY: [mouseX],
         } = moreProps;
-        const { dx, dy } = this.dragStartPosition;
 
         const newWidth = Math.abs(mouseX - xScale(position[0]) + width / 2);
 
@@ -273,12 +259,12 @@ class Transform extends Component {
         });
     }
 
-    handleEdgeTopDragStart(moreProps) {
+    handleEdgeTopDragStart() {
         this.setState({
             anchor: "edgeTop",
         });
     }
-    handleEdgeBottomDragStart(moreProps) {
+    handleEdgeBottomDragStart() {
         this.setState({
             anchor: "edgeBottom",
         });
@@ -293,7 +279,6 @@ class Transform extends Component {
         const {
             index,
             position,
-            width,
             onDrag,
             edgeRight,
             edgeLeft,
@@ -303,15 +288,11 @@ class Transform extends Component {
             degrees,
         } = this.props;
         const {
-            xScale,
-            mouseXY: [mouseX, mouseY],
+            mouseXY: [, mouseY],
             chartConfig: { yScale },
-            xAccessor,
-            currentItem,
         } = moreProps;
 
         const newHeight = Math.abs(yScale(position[1]) - mouseY  + height / 2);
-        const newDegrees = pointDirection(mouseX, mouseY, position[0], position[1])
 
         onDrag(index, position, {
             width: newHeight,
@@ -337,16 +318,12 @@ class Transform extends Component {
             degrees,
         } = this.props;
         const {
-            xScale,
-            mouseXY: [mouseX, mouseY],
+            mouseXY: [, mouseY],
             chartConfig: { yScale },
-            xAccessor,
-            currentItem,
         } = moreProps;
 
         const newHeight = Math.abs(mouseY - yScale(position[1]) + height / 2);
         const newWidth = Math.abs(mouseY - yScale(position[1]) + width / 2);
-        const newDegrees = pointDirection(mouseX, mouseY, position[0], position[1])
 
         onDrag(index, position, {
             width: newWidth,
@@ -369,23 +346,12 @@ class Transform extends Component {
             edgeFill,
             edgeStroke,
             edgeInteractiveCursor,
-            hoverText,
             selected,
             position,
             width,
             height,
             degrees,
-            figure,
-            onHover,
-            onUnHover,
         } = this.props;
-
-        const {
-            enable: hoverTextEnabled,
-            selectedText: hoverTextSelected,
-            text: hoverTextUnselected,
-            ...restHoverTextProps
-        } = hoverText;
 
         const { anchor } = this.state;
 
