@@ -1,3 +1,4 @@
+/* eslint-disable react/no-direct-mutation-state */
 
 
 import React, { Component } from "react";
@@ -20,7 +21,6 @@ class InteractiveText extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleDraw = this.handleDraw.bind(this);
 		this.handleDrag = this.handleDrag.bind(this);
 		this.handleDouble = this.handleDouble.bind(this);
 		this.handleDoubleClick = this.handleDoubleClick.bind(this);
@@ -52,7 +52,7 @@ class InteractiveText extends Component {
 				...this.state.currentText,
 				position: newOverride
 			}
-		}
+		};
 
 		if (isDefined(override)) {
 			const { textList } = this.props;
@@ -70,7 +70,7 @@ class InteractiveText extends Component {
 							selected
 						};
 				});
-				
+
 			this.setState({
 				currentText: this.state.currentText
 			}, () => {
@@ -80,7 +80,7 @@ class InteractiveText extends Component {
 			this.state = {
 				...this.state,
 				override: null
-			}
+			};
 		}
 	}
 	handleDrawLine(xyValue) {
@@ -109,27 +109,7 @@ class InteractiveText extends Component {
 			currentText: props
 		});
 	}
-	handleDraw(moreProps, e) {
-		const { enabled } = this.props;
-		const {
-			mouseXY: [, mouseY],
-			chartConfig: { yScale },
-			xAccessor,
-			currentItem,
-		} = moreProps;
 
-		const xyValue = [xAccessor(currentItem), yScale.invert(mouseY)];
-		if (enabled) {
-
-			const { defaultText, onChoosePosition } = this.props;
-
-			const newText = {
-				...defaultText,
-				position: xyValue,
-			};
-			// onChoosePosition(newText, moreProps, e);
-		}
-	}
 	render() {
 		const { textList, defaultText, hoverText } = this.props;
 		const { override } = this.state;
@@ -160,7 +140,6 @@ class InteractiveText extends Component {
 				/>;
 			})}
 			<GenericChartComponent
-				onClick={this.handleDraw}
 				onDoubleClick={this.handleDoubleClick}
 
 				svgDraw={noop}
