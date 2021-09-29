@@ -253,7 +253,7 @@ function getLineCoordinates({
 }) {
 
 	const [x1, y1] = start;
-	const [y2] = end;
+	const [, y2] = end;
 	if (end[0] === start[0]) {
 		return {
 			x1,
