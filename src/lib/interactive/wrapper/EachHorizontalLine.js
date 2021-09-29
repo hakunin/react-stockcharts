@@ -26,9 +26,9 @@ class EachHorizontalLine extends Component {
 		this.nodes = {};
 
 		this.state = {
-            hover: false,
-            anchor: undefined, 
-            width: (this.props.x1Value + this.props.x2Value) / 2
+			hover: false,
+			anchor: undefined,
+			width: (this.props.x1Value + this.props.x2Value) / 2
 		};
 	}
 	handleLineDragStart() {
@@ -43,13 +43,13 @@ class EachHorizontalLine extends Component {
 		};
 	}
 	handleLineDrag(moreProps) {
-        const { index, onDrag } = this.props;
+		const { index, onDrag } = this.props;
 
 		const {
-            x1Value, 
-            y1Value,
-            x2Value, 
-            y2Value,
+			x1Value,
+			y1Value,
+			x2Value,
+			y2Value,
 		} = this.dragStart;
 
 		const { chartConfig: { yScale } } = moreProps;
@@ -64,22 +64,22 @@ class EachHorizontalLine extends Component {
 		const newY2Value = yScale.invert(y2 - dy);
 
 		onDrag(index, {
-            x1Value,
+			x1Value,
 			y1Value: newY1Value,
-            x2Value,
+			x2Value,
 			y2Value: newY2Value,
 		});
 	}
 	handleEdge1DragStart() {
-        const {
+		const {
 			x1Value, y1Value,
 			x2Value, y2Value,
-        } = this.props;
-        
-        this.dragStart = {
+		} = this.props;
+
+		this.dragStart = {
 			x1Value, y1Value,
 			x2Value, y2Value,
-        };
+		};
 		this.setState({
 			anchor: "edge1"
 		});
@@ -92,35 +92,35 @@ class EachHorizontalLine extends Component {
 		this.props.onDragComplete(...rest);
 	}
 	handleEdge1Drag(moreProps) {
-        const { index, onDrag } = this.props;
-        const { x1Value, y1Value, x2Value, y2Value } = this.dragStart;
-        const { chartConfig: { yScale } } = moreProps;
+		const { index, onDrag } = this.props;
+		const { x1Value, y1Value, x2Value, y2Value } = this.dragStart;
+		const { chartConfig: { yScale } } = moreProps;
 
-          const { startPos, mouseXY } = moreProps;
-    
-          const y1 = yScale(y1Value);
-          const y2 = yScale(y2Value);
-    
-          const dy = startPos[1] - mouseXY[1];
-          const newY1Value = yScale.invert(y1 - dy);
-          const newY2Value = yScale.invert(y2 - dy);
-    
-          onDrag(index, {
-            x1Value,
-            y1Value: newY1Value,
-            x2Value,
-            y2Value: newY2Value,
-          });
+		const { startPos, mouseXY } = moreProps;
+
+		const y1 = yScale(y1Value);
+		const y2 = yScale(y2Value);
+
+		const dy = startPos[1] - mouseXY[1];
+		const newY1Value = yScale.invert(y1 - dy);
+		const newY2Value = yScale.invert(y2 - dy);
+
+		onDrag(index, {
+			x1Value,
+			y1Value: newY1Value,
+			x2Value,
+			y2Value: newY2Value,
+		});
 	}
 
 	handleHover(moreProps) {
 		if (this.state.hover !== moreProps.hovering) {
 			this.setState({
 				hover: moreProps.hovering
-            });
-            this.setState({
+			});
+			this.setState({
 				width: (moreProps.xScale.domain()[0] + moreProps.xScale.domain()[1]) / 2
-            });
+			});
 		}
 	}
 	render() {
@@ -153,7 +153,7 @@ class EachHorizontalLine extends Component {
 			...restHoverTextProps
 		} = hoverText;
 
-		const { hover, anchor, width} = this.state;
+		const { hover, width } = this.state;
 		return <g>
 			<StraightLine
 				ref={this.saveNodeType("line")}
@@ -178,7 +178,7 @@ class EachHorizontalLine extends Component {
 			<ClickableCircle
 				ref={this.saveNodeType("edge1")}
 				show={selected || hover}
-                cx={width}
+				cx={width}
 				cy={y1Value}
 				r={r}
 				fill={edgeFill}
@@ -189,8 +189,8 @@ class EachHorizontalLine extends Component {
 				interactiveCursorClass={edgeInteractiveCursor}
 				onDragStart={this.handleEdge1DragStart}
 				onDrag={this.handleEdge1Drag}
-				onDragComplete={this.handleDragComplete} 
-            />
+				onDragComplete={this.handleDragComplete}
+			/>
 			<HoverTextNearMouse
 				show={hoverTextEnabled && hover}
 				{...restHoverTextProps}
@@ -203,7 +203,7 @@ class EachHorizontalLine extends Component {
 export function getNewXY(moreProps) {
 	const { xScale, chartConfig: { yScale }, xAccessor, plotData, mouseXY } = moreProps;
 	const mouseY = mouseXY[1];
-    const x = getXValue(xScale, xAccessor, mouseXY, plotData);
+	const x = getXValue(xScale, xAccessor, mouseXY, plotData);
 
 	const [small, big] = yScale.domain().slice().sort(d3Ascending);
 	const y = yScale.invert(mouseY);
