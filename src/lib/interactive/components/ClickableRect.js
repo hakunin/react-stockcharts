@@ -32,7 +32,6 @@ class ClickableRect extends Component {
     drawOnCanvas(ctx, moreProps) {
         const { stroke, strokeWidth, fill } = this.props;
         const { fillOpacity, strokeOpacity } = this.props;
-        const { r } = this.props;
 
         const [x, y] = helper(this.props, moreProps);
 
@@ -90,7 +89,7 @@ class ClickableRect extends Component {
 }
 
 function helper(props, moreProps) {
-    const { xyProvider, cx, cy, width, height, placement } = props;
+    const { xyProvider, cx, cy, width, placement } = props;
 
     if (isDefined(xyProvider)) {
         return xyProvider(moreProps);
@@ -101,14 +100,14 @@ function helper(props, moreProps) {
         chartConfig: { yScale },
     } = moreProps;
 
-    if (placement === 'left') {
+    if (placement === "left") {
         const x = xScale(cx) - width / 2 - 10;
         const y = yScale(cy) - 5;
 
         return [x, y];
     }
 
-    if (placement === 'right') {
+    if (placement === "right") {
         const x = xScale(cx) + width / 2;
         const y = yScale(cy) - 5;
 
