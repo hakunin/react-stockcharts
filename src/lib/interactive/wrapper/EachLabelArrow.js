@@ -74,7 +74,7 @@ class EachLabelArrow extends Component {
 				hover: moreProps.hovering,
 			});
 		}
-		this.props.getHoverInteractive(moreProps.hovering)
+		this.props.getHoverInteractive(moreProps.hovering);
 	}
 	handleDragComplete(...rest) {
 		this.setState({
@@ -237,7 +237,6 @@ EachLabelArrow.defaultProps = {
 	hovering: false,
 	width: 40,
 	type: "OPEN",
-	width: 40,
 	fill: "#4B8302",
 	hoverText: {
 		...HoverTextNearMouse.defaultProps,

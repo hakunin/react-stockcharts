@@ -1,10 +1,11 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import GenericChartComponent from "../../GenericChartComponent";
 import { getMouseCanvas } from "../../GenericComponent";
 
-import { isDefined, noop, hexToRGBA } from "../../utils";
+import { isDefined, noop } from "../../utils";
 
 class LabelArrow extends Component {
 	constructor(props) {
@@ -13,7 +14,6 @@ class LabelArrow extends Component {
 		this.calculateTextWidth = true;
 
 		this.renderSVG = this.renderSVG.bind(this);
-		this.drawOnCanvas = this.drawOnCanvas.bind(this);
 		this.isHover = this.isHover.bind(this);
 	}
 	isHover(moreProps) {
@@ -40,42 +40,6 @@ class LabelArrow extends Component {
 			getHoverInteractive(false);
 		}
 		return false;
-	}
-	drawOnCanvas(ctx, moreProps) {
-		// const {
-		//     bgFill,
-		//     bgOpacity,
-		//     bgStrokeWidth,
-		//     bgStroke,
-		//     textFill,
-		//     fontFamily,
-		//     fontSize,
-		//     fontStyle,
-		//     fontWeight,
-		//     text,
-		// } = this.props;
-		// if (this.calculateTextWidth) {
-		//     ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
-		//     const { width } = ctx.measureText(text);
-		//     this.textWidth = width;
-		//     this.calculateTextWidth = false;
-		// }
-		// const { selected } = this.props;
-		// const { x, y, rect } = helper(this.props, moreProps, this.textWidth);
-		// ctx.fillStyle = hexToRGBA(bgFill, bgOpacity);
-		// ctx.beginPath();
-		// ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-		// if (selected) {
-		//     ctx.strokeStyle = bgStroke;
-		//     ctx.lineWidth = bgStrokeWidth;
-		//     ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
-		// }
-		// ctx.fillStyle = textFill;
-		// ctx.textBaseline = "middle";
-		// ctx.textAlign = "center";
-		// ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
-		// ctx.beginPath();
-		// ctx.fillText(text, x, y);
 	}
 	renderSVG(moreProps) {
 		const { id, type, fill } = this.props;
