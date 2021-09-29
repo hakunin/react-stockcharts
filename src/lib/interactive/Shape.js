@@ -69,7 +69,7 @@ class Shape extends React.Component {
 	handleDraw(moreProps, e) {
 		const { enabled, shapes } = this.props;
 		const {
-			mouseXY: [mouseY],
+			mouseXY: [, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			currentItem,
