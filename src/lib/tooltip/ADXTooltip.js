@@ -17,14 +17,14 @@ class ADXTooltip extends Component {
 	}
 	renderSVG(moreProps) {
 		const { onClick, fontFamily, fontSize, yAccessor, displayFormat, className } = this.props;
-		const { options, labelFill, textFill, appearance } = this.props;
+		const { options, labelFill } = this.props;
 		const { stroke } = {
 			fill: "none",
 			hoverStrokeWidth: 4,
 			stroke: {
 				ALine: "#ff0001",
 				dLine: "#EA2BFF",
-				kLine: "#74D400",	
+				kLine: "#74D400",
 			},
 			strokeDasharray: "Solid",
 			strokeOpacity: 1,
