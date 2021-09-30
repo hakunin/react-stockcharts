@@ -53,7 +53,8 @@ export default function() {
 				DMIM = 0;
 			} else if (DMIM > DMIP) {
 				DMIP = 0;
-			} else if (DMIM === DMIP) {
+			// eslint-disable-next-line no-cond-assign
+			} else if (DMIM = DMIP) {
 				DMIM = 0;
 				DMIM = 0;
 			}
@@ -99,8 +100,8 @@ export default function() {
 				ADXVal = ((ADXVal * nMinus) + DXval) / windowSize;
 
 				if (ind > nMinus) {
-					const adxValue = ADXVal;
-					ADXVal = adxValue;
+					// eslint-disable-next-line no-self-assign
+					ADXVal = ADXVal;
 				} else {
 					ADXVal = 0;
 				}

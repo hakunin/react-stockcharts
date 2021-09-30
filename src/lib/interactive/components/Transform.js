@@ -94,7 +94,8 @@ class Transform extends Component {
         const { index, onDrag, width, height, degrees } = this.props;
 
         const {
-            mouseXY: [, mouseY],
+            // eslint-disable-next-line no-unused-vars
+            mouseXY: [mouseX, mouseY],
             chartConfig: { yScale },
             xAccessor,
             mouseXY,
@@ -190,7 +191,8 @@ class Transform extends Component {
         } = this.props;
         const {
             xScale,
-            mouseXY: [mouseX],
+            // eslint-disable-next-line no-unused-vars
+            mouseXY: [mouseX, mouseY],
         } = moreProps;
 
         const newWidth = Math.abs(xScale(position[0]) - mouseX  + width / 2);
@@ -243,7 +245,8 @@ class Transform extends Component {
         } = this.props;
         const {
             xScale,
-            mouseXY: [mouseX],
+            // eslint-disable-next-line no-unused-vars
+            mouseXY: [mouseX, mouseY],
         } = moreProps;
 
         const newWidth = Math.abs(mouseX - xScale(position[0]) + width / 2);
@@ -288,7 +291,8 @@ class Transform extends Component {
             degrees,
         } = this.props;
         const {
-            mouseXY: [, mouseY],
+            // eslint-disable-next-line no-unused-vars
+            mouseXY: [mouseX, mouseY],
             chartConfig: { yScale },
         } = moreProps;
 
@@ -318,7 +322,8 @@ class Transform extends Component {
             degrees,
         } = this.props;
         const {
-            mouseXY: [, mouseY],
+            // eslint-disable-next-line no-unused-vars
+            mouseXY: [mouseX, mouseY],
             chartConfig: { yScale },
         } = moreProps;
 

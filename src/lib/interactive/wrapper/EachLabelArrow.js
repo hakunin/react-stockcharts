@@ -48,7 +48,8 @@ class EachLabelArrow extends Component {
 	handleDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			mouseXY,
@@ -85,7 +86,8 @@ class EachLabelArrow extends Component {
 	handleEdge1Drag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			mouseXY,

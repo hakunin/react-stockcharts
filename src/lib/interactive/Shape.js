@@ -69,7 +69,8 @@ class Shape extends React.Component {
 	handleDraw(moreProps, e) {
 		const { enabled, shapes } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			currentItem,

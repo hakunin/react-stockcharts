@@ -339,6 +339,18 @@ export function getNewXY(moreProps) {
     return [x, newY];
 }
 
+// eslint-disable-next-line no-unused-vars
+function helper({ x1, y1, x2, y2 }) {
+    const dy = y2 - y1;
+    const retracements = [100, 61.8, 50, 38.2, 23.6, 0].map((each) => ({
+        percent: each,
+        x1,
+        x2,
+        y: y2 - (each / 100) * dy,
+    }));
+
+    return retracements;
+}
 EachLinePrecent.propTypes = {
     x1Value: PropTypes.any.isRequired,
     x2Value: PropTypes.any.isRequired,

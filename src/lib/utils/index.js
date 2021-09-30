@@ -219,7 +219,8 @@ export function current(array, accessor) {
 
 	for (let i = 0; i < length; i++) {
 		const curTick = array[i];
-		if (i !== 0) {
+		// eslint-disable-next-line eqeqeq
+		if (i != 0) {
 			const lastObvValue = obvs[i - 1];
 			if (curTick[0] >= lastTick) {
 				value = lastObvValue + accessor(curTick);

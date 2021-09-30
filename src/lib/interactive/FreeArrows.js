@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -133,6 +132,7 @@ class FreeArrows extends Component {
 		const { isHover } = this.props;
 		isHover(hovering, arrow);
 	}
+	
 	render() {
 		const { appearance } = this.props;
 		const { enabled, snap, shouldDisableSnap, snapTo, type } = this.props;

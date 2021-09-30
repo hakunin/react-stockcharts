@@ -1,6 +1,5 @@
 /* eslint-disable react/no-direct-mutation-state */
 
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -46,6 +45,7 @@ class InteractiveText extends Component {
 		const { override } = this.state;
 		const newOverride = override && override.position || null;
 
+		// eslint-disable-next-line react/no-direct-mutation-state
 		this.state = {
 			...this.state,
 			currentText: {

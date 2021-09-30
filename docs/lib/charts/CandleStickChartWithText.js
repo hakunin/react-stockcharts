@@ -132,7 +132,8 @@ class CandleStickChartWithText extends React.Component {
 
 				const morePropsForChart = getMorePropsForChart(moreProps, first);
 				const {
-					mouseXY: [, mouseY],
+					// eslint-disable-next-line no-unused-vars
+					mouseXY: [mouseX, mouseY],
 					chartConfig: { yScale },
 					xAccessor,
 					currentItem,

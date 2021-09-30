@@ -133,7 +133,8 @@ class CandlestickChart extends React.Component {
                     first
                 );
                 const {
-                    mouseXY: [, mouseY],
+                    // eslint-disable-next-line no-unused-vars
+                    mouseXY: [mouseX, mouseY],
                     chartConfig: { yScale },
                     xAccessor,
                     currentItem,
