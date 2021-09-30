@@ -152,7 +152,7 @@ class EachRectangle extends Component {
 	getEdgeCircle({ x, y, dragHandler, cursor, fill, edge }) {
 		const { hover } = this.state;
 		const { appearance } = this.props;
-		const { edgeFill, edgeStroke, edgeStrokeWidth, r } = appearance;
+		const { edgeStroke, edgeStrokeWidth, r } = appearance;
 
 		const { selected, onDragComplete } = this.props;
 

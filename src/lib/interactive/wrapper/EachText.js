@@ -45,7 +45,8 @@ class EachText extends Component {
 	handleDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			mouseXY,

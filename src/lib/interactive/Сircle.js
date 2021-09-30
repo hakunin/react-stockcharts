@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { isDefined, isNotDefined, noop, strokeDashTypes } from "../utils";
 
 import {
-	getValueFromOverride,
 	terminate,
 	saveNodeType,
 	isHoverForInteractiveType,

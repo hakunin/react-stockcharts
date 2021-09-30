@@ -1,12 +1,9 @@
-
-
-import { max, min, mean } from "d3-array";
+import { max, min } from "d3-array";
 
 import { ATR as defaultOptions } from "./defaultOptionsForComputation";
-import { slidingWindow, last, isDefined } from "../utils";
-import { cci } from "../indicator";
+import { slidingWindow, last } from "../utils";
 
-export default function () {
+export default function() {
 
 	let options = defaultOptions;
 	let source = d => ({ open: d.open, high: d.high, low: d.low, close: d.close });
@@ -29,7 +26,7 @@ export default function () {
 				const TP = (highestHigh + lowestLow + currentClose) / 3;
 				const smaTP = TP / windowSize;
 				const meanDeviation = TP / smaTP;
-				const cciData = (TP - smaTP) / (0.15 * meanDeviation)
+				const cciData = (TP - smaTP) / (0.15 * meanDeviation);
 				return cciData;
 
 			});
@@ -38,11 +35,11 @@ export default function () {
 
 		return newData;
 	}
-	calculator.undefinedLength = function () {
+	calculator.undefinedLength = function() {
 		const { windowSize } = options;
 		return windowSize - 1;
 	};
-	calculator.options = function (x) {
+	calculator.options = function(x) {
 		if (!arguments.length) {
 			return options;
 		}
@@ -50,7 +47,7 @@ export default function () {
 		return calculator;
 	};
 
-	calculator.source = function (x) {
+	calculator.source = function(x) {
 		if (!arguments.length) {
 			return source;
 		}

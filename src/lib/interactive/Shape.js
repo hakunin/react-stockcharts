@@ -69,7 +69,7 @@ class Shape extends React.Component {
 	handleDraw(moreProps, e) {
 		const { enabled, shapes } = this.props;
 		const {
-			xScale,
+			// eslint-disable-next-line no-unused-vars
 			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
@@ -77,8 +77,6 @@ class Shape extends React.Component {
 		} = moreProps;
 
 		const xyValue = [xAccessor(currentItem), yScale.invert(mouseY)];
-
-		const xylValue = [];
 
 		if (enabled) {
 			const { defaultShape, onChoosePosition, figure } = this.props;

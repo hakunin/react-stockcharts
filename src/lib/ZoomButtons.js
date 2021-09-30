@@ -50,7 +50,7 @@ class ZoomButtons extends Component {
             if (foo.length === 0) {
                 clearInterval(this.interval);
                 delete this.interval;
-                onZoom(false, this.context, 'end');
+                onZoom(false, this.context, "end");
             }
         }, 10);
     }
@@ -58,13 +58,13 @@ class ZoomButtons extends Component {
         const { onZoom } = this.props;
         if (this.interval) return;
         this.zoom(1);
-        onZoom(true, this.context, 'out');
+        onZoom(true, this.context, "out");
     }
-    handleZoomIn(e, moreProps) {
+    handleZoomIn() {
         const { onZoom } = this.props;
         if (this.interval) return;
         this.zoom(-1);
-        onZoom(true, this.context, 'in');
+        onZoom(true, this.context, "in");
     }
     isHover(moreProps) {
         const { width, height } = moreProps.chartConfig;
@@ -80,7 +80,7 @@ class ZoomButtons extends Component {
 
         return true;
     }
-    renderSVG(moreProps) {
+    renderSVG() {
         const { chartConfig } = this.context;
         const { width, height } = chartConfig;
         const { visible } = this.state;

@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 import { ADX as defaultOptions } from "./defaultOptionsForComputation";
 
-export default function () {
+export default function() {
 
 	let options = defaultOptions;
 	function calculator(data) {
@@ -38,30 +38,31 @@ export default function () {
 		const FindTR = (DMIP, DMIM, TR, Last, PrevLast) => {
 
 			if (Last.high > PrevLast.high) {
-				DMIP = Last.high - PrevLast.high
+				DMIP = Last.high - PrevLast.high;
 			} else {
 				DMIP = 0;
 			}
 
 			if (Last.low < PrevLast.low) {
-				DMIM = PrevLast.low - Last.low
+				DMIM = PrevLast.low - Last.low;
 			} else {
-				DMIM = 0
+				DMIM = 0;
 			}
 
 			if (DMIP > DMIM) {
-				DMIM = 0
+				DMIM = 0;
 			} else if (DMIM > DMIP) {
-				DMIP = 0
+				DMIP = 0;
+			// eslint-disable-next-line no-cond-assign
 			} else if (DMIM = DMIP) {
-				DMIM = 0
-				DMIM = 0
+				DMIM = 0;
+				DMIM = 0;
 			}
 
 			TR = Math.max(Last.high - Last.low, Last.high - PrevLast.close, Last.low - PrevLast.close);
 
-			return { DMIP, DMIM, TR }
-		}
+			return { DMIP, DMIM, TR };
+		};
 
 		const adxIndicator = (data) => {
 			let TR = 0;
@@ -87,10 +88,10 @@ export default function () {
 				sumDMIP = devN * sumDMIP + finded.DMIP;
 				sumTR = devN * sumTR + finded.TR;
 
-				DIPline = 100 * (sumDMIP / sumTR)
-				DIMline = 100 * (sumDMIM / sumTR)
+				DIPline = 100 * (sumDMIP / sumTR);
+				DIMline = 100 * (sumDMIM / sumTR);
 
-				DXval = ((DIPline - DIMline) / (DIPline + DIMline)) * 100
+				DXval = ((DIPline - DIMline) / (DIPline + DIMline)) * 100;
 
 				if (isNaN(DXval)) {
 					DXval = 0;
@@ -99,27 +100,28 @@ export default function () {
 				ADXVal = ((ADXVal * nMinus) + DXval) / windowSize;
 
 				if (ind > nMinus) {
-					ADXVal = ADXVal
+					// eslint-disable-next-line no-self-assign
+					ADXVal = ADXVal;
 				} else {
 					ADXVal = 0;
 				}
 
-				adxArr.push({ plusDI: Math.abs(DIPline), minusDI: Math.abs(DIMline), adxValue: Math.abs(ADXVal) })
+				adxArr.push({ plusDI: Math.abs(DIPline), minusDI: Math.abs(DIMline), adxValue: Math.abs(ADXVal) });
 
 			}
 			return adxArr;
-		}
+		};
 
 		const finalData = adxIndicator(data);
 
 		return finalData;
 	}
-	calculator.undefinedLength = function () {
+	calculator.undefinedLength = function() {
 		const { windowSize } = options;
 
 		return windowSize - 1;
 	};
-	calculator.options = function (x) {
+	calculator.options = function(x) {
 		if (!arguments.length) {
 			return options;
 		}

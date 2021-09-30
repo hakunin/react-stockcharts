@@ -8,8 +8,6 @@ import { getMouseCanvas } from "../../GenericComponent";
 
 import {
     helper,
-    Circle,
-    Reactangle,
     StarPath,
     ExclamationPath,
     LoverPath,
@@ -44,8 +42,8 @@ class AnnotateShape extends Component {
             hoverSVG: false,
         };
     }
-    isHover(moreProps, e) {
-        const { onHover, width } = this.props;
+    isHover(moreProps) {
+        const { onHover } = this.props;
         if (isDefined(onHover)) {
             const { rect } = helper(this.props, moreProps);
             const {
@@ -65,7 +63,7 @@ class AnnotateShape extends Component {
     }
 
     drawOnCanvas(ctx, moreProps) {
-        const { figure, width, height, degrees, fill, stroke } = this.props;
+        const { figure, width, height, degrees, fill } = this.props;
 
         const { x, y } = helper(this.props, moreProps);
         ctx.fillStyle = hexToRGBA(fill, 1);
@@ -110,7 +108,7 @@ class AnnotateShape extends Component {
                 break;
             case "goal":
                 pathData = GoalPath(x, y, width, height, degrees);
-                break;    
+                break; 
             case "pluse":
                 pathData = PlusePath(x, y, width, height, degrees);
                 break;
@@ -144,12 +142,6 @@ class AnnotateShape extends Component {
     }
 
     renderSVG(moreProps) {
-        const { xAccessor } = moreProps;
-        const {
-            xScale,
-            chartConfig: { yScale },
-            plotData,
-        } = moreProps;
 
         const {
             fill,
@@ -243,8 +235,6 @@ class AnnotateShape extends Component {
         const {
             interactiveCursorClass,
             selected,
-            onDragStart,
-            onDrag,
             onDragComplete,
             onHover,
             onUnHover,

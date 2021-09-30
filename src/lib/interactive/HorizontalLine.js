@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { isDefined, isNotDefined, noop, strokeDashTypes } from "../utils";
+import { isDefined, noop } from "../utils";
 
 import {
 	getValueFromOverride,

@@ -48,7 +48,8 @@ class EachLabelArrow extends Component {
 	handleDrag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			mouseXY,
@@ -74,7 +75,7 @@ class EachLabelArrow extends Component {
 				hover: moreProps.hovering,
 			});
 		}
-		this.props.getHoverInteractive(moreProps.hovering)
+		this.props.getHoverInteractive(moreProps.hovering);
 	}
 	handleDragComplete(...rest) {
 		this.setState({
@@ -85,7 +86,8 @@ class EachLabelArrow extends Component {
 	handleEdge1Drag(moreProps) {
 		const { index, onDrag } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			mouseXY,
@@ -237,7 +239,6 @@ EachLabelArrow.defaultProps = {
 	hovering: false,
 	width: 40,
 	type: "OPEN",
-	width: 40,
 	fill: "#4B8302",
 	hoverText: {
 		...HoverTextNearMouse.defaultProps,

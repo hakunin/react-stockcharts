@@ -49,7 +49,7 @@ class BackgroundHover extends Component {
         ctx.restore();
     }
     renderSVG(moreProps, e) {
-        const { cx, cy, width, onHover, onUnHover, height, fill } = this.props;
+        const { cx, cy, width, onHover, onUnHover, height } = this.props;
         return (
             <g>
                 <rect
