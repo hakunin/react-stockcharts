@@ -53,7 +53,6 @@ class EachLinePrecent extends Component {
         }
         return prevState;
     }
-
     handleLineDragStart() {
         const { x1Value, y1Value, x2Value, y2Value } = this.props;
 
@@ -340,6 +339,7 @@ export function getNewXY(moreProps) {
     return [x, newY];
 }
 
+// eslint-disable-next-line no-unused-vars
 function helper({ x1, y1, x2, y2 }) {
     const dy = y2 - y1;
     const retracements = [100, 61.8, 50, 38.2, 23.6, 0].map((each) => ({
@@ -351,7 +351,6 @@ function helper({ x1, y1, x2, y2 }) {
 
     return retracements;
 }
-
 EachLinePrecent.propTypes = {
     x1Value: PropTypes.any.isRequired,
     x2Value: PropTypes.any.isRequired,

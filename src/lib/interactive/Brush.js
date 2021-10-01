@@ -87,7 +87,8 @@ class Brush extends Component {
 		if (this.state.rect) return;
 		this.zoomHappening = false;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			currentItem,
 			chartConfig: { yScale },
 			xAccessor,
@@ -115,7 +116,8 @@ class Brush extends Component {
 		this.zoomHappening = true;
 
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			currentItem,
 			chartConfig: { yScale },
 			xAccessor,

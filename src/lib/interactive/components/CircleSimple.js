@@ -21,10 +21,10 @@ class CircleSimple extends Component {
 		this.isHover = this.isHover.bind(this);
 	}
 	isHover(moreProps) {
-		const { tolerance, onHover, getHoverInteractive } = this.props;
+		const { onHover, getHoverInteractive } = this.props;
 
 		if (isDefined(onHover)) {
-			const { x1Value, x2Value, y1Value, y2Value, type } = this.props;
+			const { x1Value, x2Value, y1Value, y2Value } = this.props;
 			const { mouseXY, xScale } = moreProps;
 			const { chartConfig: { yScale } } = moreProps;
 
@@ -44,9 +44,8 @@ class CircleSimple extends Component {
 	drawOnCanvas(ctx, moreProps) {
 		const { strokeWidth, fill, fillOpacity } = this.props;
 
-		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
+		const { x1, y1, y2 } = helper(this.props, moreProps);
 
-		const width = x2 - x1;
 		const height = y2 - y1;
 
 		ctx.lineWidth = strokeWidth;
@@ -60,9 +59,9 @@ class CircleSimple extends Component {
 		ctx.stroke();
 	}
 	renderSVG(moreProps) {
-		const { stroke, strokeWidth, strokeOpacity, strokeDasharray, fill } = this.props;
+		const { stroke, strokeWidth, strokeOpacity, fill } = this.props;
 
-		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
+		const { x1, y1, y2 } = helper(this.props, moreProps);
 		const height = y2 - y1;
 
 		return (

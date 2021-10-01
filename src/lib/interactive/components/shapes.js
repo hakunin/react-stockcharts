@@ -1,8 +1,8 @@
 import { SVGPathData } from "svg-pathdata";
-import { isDefined, hexToRGBA } from "../../utils";
+import { hexToRGBA } from "../../utils";
 
 export const Reactangle = (ctx, moreProps, props) => {
-    const { fill, opacity, width, height, degrees } = props;
+    const { fill, width, height } = props;
 
     const { x, y } = helper(props, moreProps);
 
@@ -17,7 +17,7 @@ export const Reactangle = (ctx, moreProps, props) => {
 };
 
 export const Circle = (ctx, moreProps, props) => {
-    const { fill, opacity, width, height, degrees } = props;
+    const { fill, width, height, degrees } = props;
 
     const { x, y } = helper(props, moreProps);
 
@@ -32,10 +32,8 @@ export const Circle = (ctx, moreProps, props) => {
     ctx.stroke();
 };
 
-export const Plus = (ctx, moreProps, props) => {
-    const { fill, opacity, width, height, degrees } = props;
-
-    const { x, y } = helper(props, moreProps);
+export const Plus = (ctx, props) => {
+    const { fill } = props;
 
     ctx.StrokeStyle = hexToRGBA(fill, 1);
     ctx.FillStyle = hexToRGBA(fill, 1);
@@ -48,7 +46,7 @@ export const Plus = (ctx, moreProps, props) => {
     ctx.stroke();
 };
 
-export const Star = (ctx, moreProps, props) => {};
+export const Star = () => {};
 
 export function helper(props, moreProps) {
     const { position, width, height } = props;

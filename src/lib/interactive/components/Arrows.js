@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -80,7 +81,6 @@ class Arrows extends Component {
 			strokeWidth,
 			strokeOpacity,
 			strokeDasharray,
-			type,
 		} = this.props;
 
 		const lineWidth = strokeWidth;
@@ -115,7 +115,7 @@ class Arrows extends Component {
 		);
 	}
 	render() {
-		const { selected, interactiveCursorClass, hovering } = this.props;
+		const { selected, interactiveCursorClass } = this.props;
 		const {
 			onDragStart,
 			onDrag,

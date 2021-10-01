@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import LineSeries from "./LineSeries";
-import StraightLine from "./StraightLine";
 
 class ADXSeries extends Component {
 	constructor(props) {
@@ -26,8 +25,8 @@ class ADXSeries extends Component {
 		return yAccessor(d) && yAccessor(d).adxValue;
 	}
 	render() {
-		const { className, stroke, refLineOpacity } = this.props;
-		const { overSold, middle, overBought } = this.props;
+		const { className, stroke } = this.props;
+
 		return (
 			<g className={className}>
 				<LineSeries yAccessor={this.yAccessorForPD}

@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { format } from "d3-format";
 
 import { ascending as d3Ascending } from "d3-array";
-import { noop, strokeDashTypes } from "../../utils";
-import { isNotDefined, saveNodeType, isHover } from "../utils";
+import { noop } from "../../utils";
+import { saveNodeType, isHover } from "../utils";
 import { getXValue } from "../../utils/ChartDataUtil";
 
-import StraightLine, { generateLine } from "../components/StraightLine";
 import AnnotateShape from "../components/AnnotateShape";
-import ClickableCircle from "../components/ClickableCircle";
-import ClickableRect from "../components/ClickableRect";
-import BackgroundHover from "../components/BackgroundHover";
 import HoverTextNearMouse from "../components/HoverTextNearMouse";
 import Transform from "../components/Transform";
-import Text from "../components/Text";
 
 class EachShape extends Component {
 	constructor(props) {
@@ -52,20 +46,14 @@ class EachShape extends Component {
 			opacity,
 			fill,
 			r,
-			edgeStrokeWidth,
-			edgeFill,
-			edgeStroke,
-			edgeInteractiveCursor,
 			hoverText,
 			selected,
 			figure,
 			position,
 			onDragComplete,
 			onDrag,
-			lineInteractiveCursor,
 			width,
 			height,
-			angle,
 			edgeRight,
 			edgeLeft,
 			edgeAngleTop,
@@ -82,7 +70,7 @@ class EachShape extends Component {
 			...restHoverTextProps
 		} = hoverText;
 
-		const { hover, anchor } = this.state;
+		const { hover } = this.state;
 		return (
 			<g>
 				<Transform
@@ -99,9 +87,6 @@ class EachShape extends Component {
 					edgeAngleBottom={edgeAngleBottom}
 					selected={selected || hover}
 					r={r}
-					position={position}
-					fill={fill}
-					opacity={opacity}
 					width={width}
 					height={height}
 					interactiveCursorClass="react-stockcharts-move-cursor"

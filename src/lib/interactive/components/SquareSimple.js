@@ -85,9 +85,9 @@ class SquareSimple extends Component {
 	drawOnCanvas(ctx, moreProps) {
 		const { strokeWidth, fill, fillOpacity } = this.props;
 
-		const { x1, y1, x2, y2 } = helper(this.props, moreProps);
+		const { x1, y1, y2 } = helper(this.props, moreProps);
 		const width = y2 - y1;
-		const height = y2 - y1; 
+		const height = y2 - y1;
 
 		ctx.lineWidth = strokeWidth;
 		ctx.beginPath();
@@ -253,19 +253,19 @@ function getLineCoordinates({
 }) {
 
 	const [x1, y1] = start;
-	const [x2, y2] = end;
+	const [, y2] = end;
 	if (end[0] === start[0]) {
 		return {
 			x1,
 			y1: start[1],
-			x2: x1+(y1-y2),
+			x2: x1 + (y1 - y2),
 			y2: end[1],
 		};
 	}
 
 	return {
 		x1: x1, y1,
-		x2: x1+(y1-y2), y2,
+		x2: x1 + (y1 - y2), y2,
 	};
 }
 

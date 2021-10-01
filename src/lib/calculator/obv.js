@@ -1,11 +1,7 @@
-
-
-import { max, min, mean } from "d3-array";
-
 import { OBV as defaultOptions } from "./defaultOptionsForComputation";
-import { slidingWindow, last, current, mapValue } from "../utils";
+import { slidingWindow } from "../utils";
 
-export default function () {
+export default function() {
 
 	let options = defaultOptions;
 	let source = d => ({ close: d.close, volume: d.volume });
@@ -18,11 +14,11 @@ export default function () {
 			.accumulator(([prev, curr]) => {
 				let obv;
 				if (curr.close > prev.close) {
-					obv = Math.round(prev.volume - curr.volume, 2)
+					obv = Math.round(prev.volume - curr.volume, 2);
 				} else if (curr.close < prev.close) {
-					obv = Math.round(prev.volume - curr.volume, 2)
+					obv = Math.round(prev.volume - curr.volume, 2);
 				} else {
-					obv = Math.round(prev.volume, 2)
+					obv = Math.round(prev.volume, 2);
 				}
 
 				return Math.abs(obv);
@@ -32,11 +28,11 @@ export default function () {
 
 		return newData;
 	}
-	calculator.undefinedLength = function () {
+	calculator.undefinedLength = function() {
 		const { windowSize } = options;
 		return windowSize - 1;
 	};
-	calculator.options = function (x) {
+	calculator.options = function(x) {
 		if (!arguments.length) {
 			return options;
 		}
@@ -44,7 +40,7 @@ export default function () {
 		return calculator;
 	};
 
-	calculator.source = function (x) {
+	calculator.source = function(x) {
 		if (!arguments.length) {
 			return source;
 		}

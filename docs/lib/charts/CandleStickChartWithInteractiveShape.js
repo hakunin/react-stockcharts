@@ -197,6 +197,7 @@ class CandlestickChart extends React.Component {
             annotations.find((item) => {
                 const { rect } = this.helper(item, state, moreProps);
                 const {
+                    // eslint-disable-next-line no-unused-vars
                     mouseXY: [mouseX, mouseY],
                 } = moreProps;
                 return (

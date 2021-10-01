@@ -71,7 +71,8 @@ class LabelArrow extends Component {
 	handleDraw(moreProps, e) {
 		const { enabled, type, labelArrowList } = this.props;
 		const {
-			mouseXY: [, mouseY],
+			// eslint-disable-next-line no-unused-vars
+			mouseXY: [mouseX, mouseY],
 			chartConfig: { yScale },
 			xAccessor,
 			currentItem,
