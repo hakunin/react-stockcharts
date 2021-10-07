@@ -54,21 +54,23 @@ class EachHorizontalLine extends Component {
 
 		const { chartConfig: { yScale } } = moreProps;
 		const { startPos, mouseXY } = moreProps;
+		const { hover } = this.state;
+		if (hover) {
+			const y1 = yScale(y1Value);
+			const y2 = yScale(y2Value);
 
-		const y1 = yScale(y1Value);
-		const y2 = yScale(y2Value);
+			const dy = startPos[1] - mouseXY[1];
 
-		const dy = startPos[1] - mouseXY[1];
+			const newY1Value = yScale.invert(y1 - dy);
+			const newY2Value = yScale.invert(y2 - dy);
 
-		const newY1Value = yScale.invert(y1 - dy);
-		const newY2Value = yScale.invert(y2 - dy);
-
-		onDrag(index, {
-			x1Value,
-			y1Value: newY1Value,
-			x2Value,
-			y2Value: newY2Value,
-		});
+			onDrag(index, {
+				x1Value,
+				y1Value: newY1Value,
+				x2Value,
+				y2Value: newY2Value,
+			});
+		}
 	}
 	handleEdge1DragStart() {
 		const {

@@ -57,35 +57,38 @@ class EachFreeArrows extends Component {
 		} = moreProps;
 		const { startPos, mouseXY } = moreProps;
 
-		const x1 = xScale(x1Value);
-		const y1 = yScale(y1Value);
-		const x2 = xScale(x2Value);
-		const y2 = yScale(y2Value);
+		const { hover } = this.state;
+		if (hover) {
+			const x1 = xScale(x1Value);
+			const y1 = yScale(y1Value);
+			const x2 = xScale(x2Value);
+			const y2 = yScale(y2Value);
 
-		const dx = startPos[0] - mouseXY[0];
-		const dy = startPos[1] - mouseXY[1];
+			const dx = startPos[0] - mouseXY[0];
+			const dy = startPos[1] - mouseXY[1];
 
-		const newX1Value = getXValue(
-			xScale,
-			xAccessor,
-			[x1 - dx, y1 - dy],
-			fullData
-		);
-		const newY1Value = yScale.invert(y1 - dy);
-		const newX2Value = getXValue(
-			xScale,
-			xAccessor,
-			[x2 - dx, y2 - dy],
-			fullData
-		);
-		const newY2Value = yScale.invert(y2 - dy);
+			const newX1Value = getXValue(
+				xScale,
+				xAccessor,
+				[x1 - dx, y1 - dy],
+				fullData
+			);
+			const newY1Value = yScale.invert(y1 - dy);
+			const newX2Value = getXValue(
+				xScale,
+				xAccessor,
+				[x2 - dx, y2 - dy],
+				fullData
+			);
+			const newY2Value = yScale.invert(y2 - dy);
 
-		onDrag(index, {
-			x1Value: newX1Value,
-			y1Value: newY1Value,
-			x2Value: newX2Value,
-			y2Value: newY2Value,
-		});
+			onDrag(index, {
+				x1Value: newX1Value,
+				y1Value: newY1Value,
+				x2Value: newX2Value,
+				y2Value: newY2Value,
+			});
+		}
 	}
 	handleEdge1DragStart() {
 		this.setState({

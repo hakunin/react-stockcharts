@@ -43,7 +43,7 @@ class EachText extends Component {
 		};
 	}
 	handleDrag(moreProps) {
-		const { index, onDrag } = this.props;
+		const { index, onDrag, selected } = this.props;
 		const {
 			// eslint-disable-next-line no-unused-vars
 			mouseXY: [mouseX, mouseY],
@@ -54,17 +54,22 @@ class EachText extends Component {
 			xScale,
 		} = moreProps;
 
-		const { dx, dy } = this.dragStartPosition;
-		const xValue = xScale.invert(
-			xScale(getXValue(xScale, xAccessor, mouseXY, plotData)) - dx
-		);
-		// xScale.invert(xScale(xAccessor(currentItem)) - dx);
-		const xyValue = [
-			xValue,
-			yScale.invert(mouseY - dy)
-		];
+		const { hover } = this.state;
 
-		onDrag(index, xyValue);
+		if (hover && selected) {
+
+			const { dx, dy } = this.dragStartPosition;
+			const xValue = xScale.invert(
+				xScale(getXValue(xScale, xAccessor, mouseXY, plotData)) - dx
+			);
+			// xScale.invert(xScale(xAccessor(currentItem)) - dx);
+			const xyValue = [
+				xValue,
+				yScale.invert(mouseY - dy)
+			];
+
+			onDrag(index, xyValue);
+		}
 	}
 	handleHover(moreProps) {
 		const {
@@ -85,7 +90,8 @@ class EachText extends Component {
 		} = this.props;
 
 		if (moreProps.hovering) {
-			onDoubleClick({	position,
+			onDoubleClick({
+				position,
 				bgFill,
 				bgOpacity,
 				bgStroke,
@@ -97,7 +103,8 @@ class EachText extends Component {
 				fontStyle,
 				text,
 				hoverText,
-				selected, moreProps });
+				selected, moreProps
+			});
 		} else {
 			onDoubleClick(null);
 		}
