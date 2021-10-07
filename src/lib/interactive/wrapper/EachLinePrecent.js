@@ -75,53 +75,55 @@ class EachLinePrecent extends Component {
             fullData,
         } = moreProps;
         const { startPos, mouseXY } = moreProps;
+        const { hover } = this.state;
+        if (hover) {
+            if (isDefined(mouseXY)) {
+                const x1 = xScale(x1Value);
+                const y1 = yScale(y1Value);
+                const x2 = xScale(x2Value);
+                const y2 = yScale(y2Value);
 
-        if (isDefined(mouseXY)) {
-            const x1 = xScale(x1Value);
-            const y1 = yScale(y1Value);
-            const x2 = xScale(x2Value);
-            const y2 = yScale(y2Value);
+                const dx = startPos[0] - mouseXY[0];
+                const dy = startPos[1] - mouseXY[1];
 
-            const dx = startPos[0] - mouseXY[0];
-            const dy = startPos[1] - mouseXY[1];
+                const newX1Value = getXValue(
+                    xScale,
+                    xAccessor,
+                    [x1 - dx, y1 - dy],
+                    fullData
+                );
+                const newY1Value = yScale.invert(y1 - dy);
+                const newX2Value = getXValue(
+                    xScale,
+                    xAccessor,
+                    [x2 - dx, y2 - dy],
+                    fullData
+                );
+                const newY2Value = yScale.invert(y2 - dy);
 
-            const newX1Value = getXValue(
-                xScale,
-                xAccessor,
-                [x1 - dx, y1 - dy],
-                fullData
-            );
-            const newY1Value = yScale.invert(y1 - dy);
-            const newX2Value = getXValue(
-                xScale,
-                xAccessor,
-                [x2 - dx, y2 - dy],
-                fullData
-            );
-            const newY2Value = yScale.invert(y2 - dy);
-
-            onDrag(index, {
-                x1Value: newX1Value,
-                y1Value: newY1Value,
-                x2Value: newX2Value,
-                y2Value: newY2Value,
-                firstItem: fullData.find(
-                    (item) => item.idx.index === newX1Value
-                ),
-                lastItem: fullData.find(
-                    (item) => item.idx.index === newX2Value
-                ),
-            });
-            this.setState({
-                anchor: "edge1",
-                move: true,
-                Edge1DItem: fullData.find(
-                    (item) => item.idx.index === newX1Value
-                ),
-                Edge2DItem: fullData.find(
-                    (item) => item.idx.index === newX2Value
-                ),
-            });
+                onDrag(index, {
+                    x1Value: newX1Value,
+                    y1Value: newY1Value,
+                    x2Value: newX2Value,
+                    y2Value: newY2Value,
+                    firstItem: fullData.find(
+                        (item) => item.idx.index === newX1Value
+                    ),
+                    lastItem: fullData.find(
+                        (item) => item.idx.index === newX2Value
+                    ),
+                });
+                this.setState({
+                    anchor: "edge1",
+                    move: true,
+                    Edge1DItem: fullData.find(
+                        (item) => item.idx.index === newX1Value
+                    ),
+                    Edge2DItem: fullData.find(
+                        (item) => item.idx.index === newX2Value
+                    ),
+                });
+            }
         }
     }
     handleEdge1DragStart(moreProps) {
