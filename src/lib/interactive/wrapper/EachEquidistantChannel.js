@@ -60,26 +60,29 @@ class EachEquidistantChannel extends Component {
 		const { xScale, chartConfig: { yScale }, xAccessor, fullData } = moreProps;
 		const { startPos, mouseXY } = moreProps;
 
-		const x1 = xScale(startXY[0]);
-		const y1 = yScale(startXY[1]);
-		const x2 = xScale(endXY[0]);
-		const y2 = yScale(endXY[1]);
+		const { hover } = this.state;
+		if (hover) {
+			const x1 = xScale(startXY[0]);
+			const y1 = yScale(startXY[1]);
+			const x2 = xScale(endXY[0]);
+			const y2 = yScale(endXY[1]);
 
-		const dx = startPos[0] - mouseXY[0];
-		const dy = startPos[1] - mouseXY[1];
+			const dx = startPos[0] - mouseXY[0];
+			const dy = startPos[1] - mouseXY[1];
 
-		const newX1Value = getXValue(xScale, xAccessor, [x1 - dx, y1 - dy], fullData);
-		const newY1Value = yScale.invert(y1 - dy);
-		const newX2Value = getXValue(xScale, xAccessor, [x2 - dx, y2 - dy], fullData);
-		const newY2Value = yScale.invert(y2 - dy);
+			const newX1Value = getXValue(xScale, xAccessor, [x1 - dx, y1 - dy], fullData);
+			const newY1Value = yScale.invert(y1 - dy);
+			const newX2Value = getXValue(xScale, xAccessor, [x2 - dx, y2 - dy], fullData);
+			const newY2Value = yScale.invert(y2 - dy);
 
-		// const newDy = newY2Value - endXY[1] + this.dragStart.dy;
+			// const newDy = newY2Value - endXY[1] + this.dragStart.dy;
 
-		onDrag(index, {
-			startXY: [newX1Value, newY1Value],
-			endXY: [newX2Value, newY2Value],
-			dy: this.dragStart.dy,
-		});
+			onDrag(index, {
+				startXY: [newX1Value, newY1Value],
+				endXY: [newX2Value, newY2Value],
+				dy: this.dragStart.dy,
+			});
+		}
 	}
 	handleLine1Edge1Drag(moreProps) {
 		const { index, onDrag } = this.props;
