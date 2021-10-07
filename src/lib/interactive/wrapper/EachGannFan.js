@@ -117,21 +117,23 @@ class EachGannFan extends Component {
 			xScale, fullData,
 			chartConfig: { yScale }
 		} = moreProps;
+		const { hover } = this.state;
+		if (hover) {
+			const dx = startPos[0] - mouseXY[0];
+			const dy = startPos[1] - mouseXY[1];
 
-		const dx = startPos[0] - mouseXY[0];
-		const dy = startPos[1] - mouseXY[1];
+			const x1 = xScale(endXY[0]);
+			const y1 = yScale(endXY[1]);
 
-		const x1 = xScale(endXY[0]);
-		const y1 = yScale(endXY[1]);
+			const newX1Value = getXValue(xScale, xAccessor, [x1 - dx, y1 - dy], fullData);
+			const newY1Value = yScale.invert(y1 - dy);
 
-		const newX1Value = getXValue(xScale, xAccessor, [x1 - dx, y1 - dy], fullData);
-		const newY1Value = yScale.invert(y1 - dy);
-
-		onDrag(index, {
-			startXY: this.dragStart.startXY,
-			endXY: [newX1Value, newY1Value],
-			dy: this.dragStart.dy,
-		});
+			onDrag(index, {
+				startXY: this.dragStart.startXY,
+				endXY: [newX1Value, newY1Value],
+				dy: this.dragStart.dy,
+			});
+		}
 	}
 	handleChannelHeightChange(moreProps) {
 		const { index, onDrag } = this.props;
@@ -180,7 +182,7 @@ class EachGannFan extends Component {
 	}
 	render() {
 		const { startXY, endXY } = this.props;
-		const { interactive, appearance  } = this.props;
+		const { interactive, appearance } = this.props;
 		const {
 			edgeFill,
 			stroke, strokeWidth, strokeOpacity,
