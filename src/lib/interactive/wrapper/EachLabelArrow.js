@@ -57,17 +57,20 @@ class EachLabelArrow extends Component {
 			xScale,
 		} = moreProps;
 
-		const { dx, dy } = this.dragStartPosition;
-		const xValue = xScale.invert(
-			xScale(getXValue(xScale, xAccessor, mouseXY, plotData)) - dx
-		);
-		// xScale.invert(xScale(xAccessor(currentItem)) - dx);
-		const xyValue = [
-			xValue,
-			yScale.invert(mouseY - dy)
-		];
+		const { hover } = this.state;
+		if (hover) {
 
-		onDrag(index, xyValue);
+			const { dx, dy } = this.dragStartPosition;
+			const xValue = xScale.invert(
+				xScale(getXValue(xScale, xAccessor, mouseXY, plotData)) - dx
+			);
+			const xyValue = [
+				xValue,
+				yScale.invert(mouseY - dy)
+			];
+
+			onDrag(index, xyValue);
+		}
 	}
 	handleHover(moreProps) {
 		if (this.state.hover !== moreProps.hovering) {
@@ -132,7 +135,6 @@ class EachLabelArrow extends Component {
 			hoverText,
 			selected,
 			onDragComplete,
-
 			r,
 			edgeStrokeWidth,
 			edgeFill,
@@ -156,11 +158,10 @@ class EachLabelArrow extends Component {
 			text: hoverTextUnselected,
 			...restHoverTextProps
 		} = hoverText;
-
 		return <g>
 			<ClickableCircle
 				ref={this.saveNodeType("edge1")}
-				show={selected || hover}
+				show={hover || selected}
 				cx={position[0]}
 				cy={position[1]}
 				r={r}

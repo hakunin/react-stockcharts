@@ -89,7 +89,14 @@ class LabelArrow extends Component {
 			onChoosePosition(newText, moreProps, e);
 		} else {
 			const newLabels = [
-				...labelArrowList.map((d) => ({ ...d, selected: false })),
+				...labelArrowList.map((d) => {
+					if (!d.hovering) {
+						return { ...d, selected: false, hovering: false };
+					} else {
+						return { ...d, selected: true, hovering: true };
+
+					}
+				}),
 			];
 			this.props.onDragComplete(newLabels, moreProps);
 		}
