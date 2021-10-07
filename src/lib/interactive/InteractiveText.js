@@ -72,7 +72,7 @@ class InteractiveText extends Component {
 				});
 
 			this.setState({
-				currentText: this.state.currentText
+				override: null,
 			}, () => {
 				this.props.onDragComplete(newTextList, moreProps);
 			});
@@ -85,7 +85,6 @@ class InteractiveText extends Component {
 	}
 	handleDrawLine(xyValue) {
 		const { current } = this.state;
-
 		if (isDefined(current) && isDefined(current.start)) {
 			this.setState({
 				current: {
