@@ -10,7 +10,7 @@ const parseDateTime = timeParse("%Y-%m-%d %H:%M:%S");
 
 
 import { TypeChooser } from "react-stockcharts/lib/helper";
-import "stylesheets/re-stock";
+//import "stylesheets/re-stock";
 
 import Nav from "lib/navbar";
 import Sidebar from "lib/sidebar";

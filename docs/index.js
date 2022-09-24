@@ -9,7 +9,7 @@ import Chart from "./lib/charts/CandleStickChartWithDarkTheme";
 
 const ReadME = require("md/MAIN.md");
 
-require("stylesheets/re-stock");
+//require("stylesheets/re-stock");
 
 document.getElementById("content").innerHTML = ReadME;
 
