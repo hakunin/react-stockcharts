@@ -1,8 +1,9 @@
 {
-	"presets": [
-		"react",
-		"stage-3"
-	],
+  "presets": [
+    // "@babel/preset-env"
+    "@babel/preset-react"
+    // "react-app"
+  ],
 	"plugins": [
 		"transform-flow-strip-types"
 	],
