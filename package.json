@@ -1,5 +1,5 @@
 {
-  "name": "@hakunin/react-stockcharts",
+  "name": "hakunin-react-stockcharts",
   "version": "0.8.95",
   "description": "Highly customizable stock charts with ReactJS and d3",
   "main": "src/index.js",
